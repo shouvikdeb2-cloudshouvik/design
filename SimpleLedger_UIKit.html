@@ -155,34 +155,17 @@
         }
 
         .grid {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 56px;
-            padding: 0 24px 80px 24px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            align-items: flex-start;
-            scrollbar-width: thin;
-            scroll-behavior: smooth;
-            scroll-snap-type: x proximity;
-        }
-        .grid::-webkit-scrollbar {
-            height: 8px;
-        }
-        .grid::-webkit-scrollbar-track {
-            background: var(--bg-surface);
-            border-radius: 4px;
-        }
-        .grid::-webkit-scrollbar-thumb {
-            background: var(--border-strong);
-            border-radius: 4px;
+            justify-items: center;
+            margin-bottom: 80px;
         }
 
         .screen-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-shrink: 0;
-            scroll-snap-align: center;
         }
 
         .screen-title {
@@ -676,171 +659,6 @@
             color: var(--text-primary);
         }
         
-        /* ============================
-           RESPONSIVE / MOBILE STYLES
-           ============================ */
-
-        /* Tablet */
-        @media (max-width: 900px) {
-            .presentation-container {
-                padding: 40px 16px;
-            }
-            .presentation-header {
-                margin-bottom: 48px;
-            }
-            .presentation-header h1 {
-                font-size: 36px;
-                letter-spacing: -1px;
-            }
-            .presentation-header p {
-                font-size: 16px;
-                margin-bottom: 24px;
-            }
-            .grid {
-                gap: 40px;
-                padding: 0 16px 60px 16px;
-            }
-        }
-
-        /* Mobile */
-        @media (max-width: 480px) {
-            body {
-                padding-bottom: 60px;
-            }
-            .presentation-container {
-                padding: 24px 0;
-                max-width: 100vw;
-                overflow-x: hidden;
-            }
-            .presentation-header {
-                margin-bottom: 32px;
-                padding: 0 20px;
-            }
-            .presentation-header h1 {
-                font-size: 28px;
-                letter-spacing: -0.5px;
-                margin-bottom: 12px;
-            }
-            .presentation-header p {
-                font-size: 14px;
-                margin-bottom: 20px;
-                line-height: 1.5;
-            }
-            .theme-toggle-container {
-                padding: 4px;
-            }
-            .theme-toggle-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-                gap: 6px;
-            }
-
-            .grid {
-                gap: 24px;
-                padding: 0 0 80px 0;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
-            .grid::-webkit-scrollbar {
-                display: none;
-            }
-
-            .screen-container {
-                scroll-snap-align: center;
-                padding: 0 16px;
-            }
-
-            .screen-title {
-                font-size: 13px;
-                margin-bottom: 16px;
-            }
-
-            /* Scale phone mockups to fit mobile viewport */
-            .screen {
-                transform: scale(0.82);
-                transform-origin: top center;
-                margin-bottom: -150px; /* compensate for scale whitespace */
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 360px) {
-            .screen {
-                width: calc(100vw - 32px);
-                border-width: 6px;
-                border-radius: 36px;
-            }
-            .screen-container {
-                padding: 0 8px;
-            }
-            .presentation-header h1 {
-                font-size: 24px;
-            }
-        }
-
-        /* Screen counter indicator (bottom bar) */
-        .screen-counter {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(18, 18, 20, 0.85);
-            border-top: 1px solid var(--border-subtle);
-            padding: 12px 24px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        [data-theme="light"] .screen-counter {
-            background: rgba(255, 255, 255, 0.85);
-        }
-        .screen-counter-text {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-secondary);
-        }
-        .screen-counter-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-align: center;
-            flex: 1;
-        }
-        .screen-counter-progress {
-            position: fixed;
-            bottom: 45px;
-            left: 0;
-            height: 3px;
-            background: var(--brand-primary);
-            z-index: 1001;
-            transition: width 0.3s ease;
-            border-radius: 0 2px 2px 0;
-        }
-        .screen-counter-nav {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-        }
-        .screen-counter-nav:active {
-            background: var(--bg-surface-raised);
-        }
-
-        @media (max-width: 480px) {
-            .screen-counter {
-                display: flex;
-            }
-        }
-
     </style>
 </head>
 <body data-theme="dark">
@@ -869,11 +687,14 @@
             }
         </script>
 
-
         <div class="grid">
+            
 
-
-            <!-- Journey Step 1 -->
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">🌳 Level 0: The First Open (Onboarding Path)</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">This path only happens once in the app's lifetime. The offline value proposition is sold immediately.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
             <!-- 19. WelcomeOnboardingScreen -->
             <div class="screen-container">
                 <div class="screen-title">19 / Welcome (Onboarding)</div>
@@ -907,8 +728,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 2 -->
             <!-- 20. ShopSetupScreen -->
             <div class="screen-container">
                 <div class="screen-title">20 / Create Shop Setup</div>
@@ -950,8 +769,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 3 -->
             <!-- 21. CreatePINScreen -->
             <div class="screen-container">
                 <div class="screen-title">21 / Setup App PIN</div>
@@ -991,50 +808,11 @@
             </div>
 
 
-            <!-- Journey Step 4 -->
-            <!-- 22. OpeningBalanceScreen (PRD §4.1 - First Launch) -->
-            <div class="screen-container">
-                <div class="screen-title">22 / Opening Balance (First Launch)</div>
-                <div class="screen">
-                    <div class="top-bar" style="background: transparent;">
-                        <button class="top-bar-btn"></button>
-                        <div class="top-bar-title" style="font-size: 16px; color: var(--text-secondary); font-weight: 600;">Step 2 of 2</div>
-                        <button class="top-bar-btn"></button>
-                    </div>
-                    
-                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px 24px 0 24px;">
-                        
-                        <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--color-received); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.08);">
-                            <i class="ph-bold ph-wallet"></i>
-                        </div>
-                        
-                        <div style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center;">How much cash do you have right now?</div>
-                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 40px; font-weight: 500; line-height: 1.5;">This sets your starting cash balance.<br>You can skip if you're unsure.</div>
-                        
-                        <!-- Amount Display -->
-                        <div style="font-size: 64px; font-weight: 800; letter-spacing: -2px; color: var(--text-primary); display: flex; align-items: center; justify-content: center; line-height: 1; margin-bottom: 16px;">
-                            <span style="font-size: 32px; color: var(--text-tertiary); margin-right: 8px; margin-top: -8px;">₹</span>
-                            5,000
-                        </div>
-                    </div>
-
-                    <!-- Numpad -->
-                    <div class="numpad" style="padding-bottom: 16px;">
-                        <button>1</button><button>2</button><button>3</button>
-                        <button>4</button><button>5</button><button>6</button>
-                        <button>7</button><button>8</button><button>9</button>
-                        <button style="font-size: 24px;">.</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
-                    </div>
-                    
-                    <div style="padding: 0 24px 32px 24px; display: flex; gap: 12px;">
-                        <button class="btn" style="flex: 1; height: 56px; border-radius: 16px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 15px; font-weight: 700;">Skip — Start at ₹0</button>
-                        <button class="btn bg-received" style="flex: 1; height: 56px; border-radius: 16px; font-size: 15px;"><i class="ph-bold ph-check"></i> Set Starting Cash</button>
-                    </div>
-                </div>
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">🔐 Level 1: The Daily Unlock Path</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">This happens every time the app is opened or minimized for > 5 minutes.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
             </div>
-
-
-            <!-- Journey Step 5 -->
             <!-- 15. AppLockScreen -->
             <div class="screen-container">
                 <div class="screen-title">15 / App Lock (Privacy)</div>
@@ -1075,7 +853,11 @@
             </div>
 
 
-            <!-- Journey Step 6 -->
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">📱 Level 2: The Main Hub (The Root Tree)</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">The speed numpad is the permanent center of the app. Everything else branches off this screen.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
             <!-- 1. HomeEntryScreen -->
             <div class="screen-container">
                 <div class="screen-title">01 / Home Dashboard</div>
@@ -1152,8 +934,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 7 -->
             <!-- Home with Undo Banner -->
             <div class="screen-container">
                 <div class="screen-title">02 / Action State</div>
@@ -1208,311 +988,11 @@
             </div>
 
 
-            <!-- Journey Step 8 -->
-            <!-- 24. HomeWithUndoBanner -->
-            <div class="screen-container">
-                <div class="screen-title">24 / Undo Banner (PRD §4.6)</div>
-                <div class="screen">
-                    <div class="top-bar">
-                        <button class="top-bar-btn"><i class="ph ph-list"></i></button>
-                        <div class="top-bar-title">Ledger</div>
-                        <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
-                    </div>
-                    
-                    <div class="balance-summary">
-                        <div class="balance-card">
-                            <span class="balance-label">Cash In</span>
-                            <span class="balance-val text-received">₹ 15,250</span>
-                        </div>
-                        <div class="balance-card">
-                            <span class="balance-label">Cash Out</span>
-                            <span class="balance-val text-given">₹ 2,000</span>
-                        </div>
-                        <div class="balance-card primary">
-                            <span class="balance-label">Balance</span>
-                            <span class="balance-val">₹ 13,250</span>
-                        </div>
-                    </div>
-
-                    <div class="amount-display-area">
-                        <div class="amount-value text-primary">
-                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
-                            0
-                        </div>
-                    </div>
-                    
-                    <!-- PRD §4.6 Undo Banner - cash sale -->
-                    <div class="undo-banner">
-                        <span style="display: flex; align-items: center; gap: 10px; font-size: 14px;">
-                            <i class="ph-fill ph-check-circle text-received" style="font-size: 22px;"></i> 
-                            ✓ ₹250 Cash Sale saved
-                        </span>
-                        <button class="undo-action">UNDO</button>
-                    </div>
-
-                    <div class="numpad">
-                        <button>1</button><button>2</button><button>3</button>
-                        <button>4</button><button>5</button><button>6</button>
-                        <button>7</button><button>8</button><button>9</button>
-                        <button style="font-size: 24px;">00</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
-                    </div>
-                    <div class="action-area">
-                        <div class="action-grid">
-                            <button class="btn bg-received"><i class="ph-bold ph-plus"></i> Sale</button>
-                            <button class="btn bg-given"><i class="ph-bold ph-minus"></i> Expense</button>
-                            <button class="btn bg-credit"><i class="ph-bold ph-handshake"></i> Credit</button>
-                            <button class="btn bg-action"><i class="ph-bold ph-arrow-down-left"></i> Receive</button>
-                        </div>
-                    </div>
-                </div>
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">⚡ Level 3: The Branches (Navigating from Home)</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Rapid, one-handed actions that instantly pull up bottom sheets or full overlays, then return right back to Home.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
             </div>
-
-
-            <!-- Journey Step 9 -->
-            <!-- 6. ExpenseScreen -->
-            <div class="screen-container">
-                <div class="screen-title">06 / Record Expense</div>
-                <div class="screen">
-                    <div class="top-bar">
-                        <button class="top-bar-btn"><i class="ph ph-x"></i></button>
-                        <div class="top-bar-title">Add Expense</div>
-                        <button class="top-bar-btn"></button>
-                    </div>
-                    
-                    <div class="pill-scroll" style="margin-top: 16px;">
-                        <div class="pill active">Tea/Snacks</div>
-                        <div class="pill">Transport</div>
-                        <div class="pill">Salary</div>
-                        <div class="pill">Materials</div>
-                    </div>
-
-                    <div class="amount-display-area" style="padding-bottom: 24px;">
-                        <div class="amount-value">
-                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
-                            150
-                        </div>
-                    </div>
-
-                    <div class="action-area" style="padding-bottom: 16px;">
-                        <button class="btn btn-full bg-given"><i class="ph-bold ph-minus"></i> Save Expense</button>
-                    </div>
-
-                    <div class="list-container">
-                        <div class="list-header">Recent Expenses</div>
-                        <div class="list-item" style="padding: 16px;">
-                            <div class="item-left">
-                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
-                                <div>
-                                    <div class="item-title" style="margin: 0; font-size: 15px;">Transport</div>
-                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Today</div>
-                                </div>
-                            </div>
-                            <div class="item-amount text-given">₹ 40</div>
-                        </div>
-                        <div class="list-item" style="padding: 16px;">
-                            <div class="item-left">
-                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
-                                <div>
-                                    <div class="item-title" style="margin: 0; font-size: 15px;">Tea/Snacks</div>
-                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Yesterday</div>
-                                </div>
-                            </div>
-                            <div class="item-amount text-given">₹ 60</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Journey Step 9 -->
-            <!-- 23. CreditUdharBottomSheet (PRD §4.4 - Core Transaction Flow) -->
-            <div class="screen-container">
-                <div class="screen-title">23 / Credit (Udhar) Entry</div>
-                <div class="screen" style="background: rgba(0,0,0,0.6);">
-                    <div class="top-bar" style="background: transparent;"></div>
-                    
-                    <div class="bottom-sheet" style="height: 85%;">
-                        <div class="sheet-handle"></div>
-                        <div style="padding: 0 24px 16px 24px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <h2 style="font-size: 22px; font-weight: 700;">Record Udhar</h2>
-                                <div style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">₹ 500 credit to customer</div>
-                            </div>
-                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
-                        </div>
-                        
-                        <!-- Amount Badge -->
-                        <div style="padding: 0 24px 20px 24px;">
-                            <div style="background: var(--color-credit-bg); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <i class="ph-bold ph-handshake" style="color: var(--color-credit); font-size: 20px;"></i>
-                                <span style="font-size: 24px; font-weight: 800; color: var(--color-credit); letter-spacing: -0.5px;">₹ 500</span>
-                            </div>
-                        </div>
-
-                        <div style="padding: 0 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; overflow-y: auto;">
-                            
-                            <!-- Customer Name with Autocomplete -->
-                            <div style="position: relative;">
-                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Customer Name *</div>
-                                <div class="input-group" style="margin: 0;">
-                                    <i class="ph-fill ph-user input-icon"></i>
-                                    <input type="text" class="giant-input" placeholder="Type customer name..." value="Raj" style="border-color: var(--brand-primary); background: var(--bg-base);">
-                                </div>
-                                
-                                <!-- Autocomplete Dropdown (PRD §4.4 - max 5 suggestions with disambiguators) -->
-                                <div style="position: absolute; top: 100%; left: 0; right: 0; z-index: 200; margin-top: 4px; background: var(--bg-surface-raised); border: 1px solid var(--border-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 32px rgba(0,0,0,0.3);">
-                                    <!-- Suggestion 1 -->
-                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); cursor: pointer;">
-                                        <div style="display: flex; align-items: center; gap: 12px;">
-                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
-                                            <div>
-                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);"><span style="color: var(--brand-primary);">Raj</span>esh Kumar</div>
-                                                <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-clock" style="font-size: 10px;"></i> Last: 2 days ago</div>
-                                            </div>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="font-size: 14px; font-weight: 700; color: var(--color-given);">₹ 2,500</div>
-                                            <div style="font-size: 11px; color: var(--text-tertiary);">pending</div>
-                                        </div>
-                                    </div>
-                                    <!-- Suggestion 2 -->
-                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); cursor: pointer;">
-                                        <div style="display: flex; align-items: center; gap: 12px;">
-                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
-                                            <div>
-                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);"><span style="color: var(--brand-primary);">Raj</span>endra Singh</div>
-                                                <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-phone" style="font-size: 10px;"></i> 98765 43210</div>
-                                            </div>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="font-size: 14px; font-weight: 700; color: var(--color-given);">₹ 800</div>
-                                            <div style="font-size: 11px; color: var(--text-tertiary);">pending</div>
-                                        </div>
-                                    </div>
-                                    <!-- Suggestion 3 (Inactive customer - PRD §8.5) -->
-                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; opacity: 0.6;">
-                                        <div style="display: flex; align-items: center; gap: 12px;">
-                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg-surface); color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
-                                            <div>
-                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-secondary);"><span style="color: var(--brand-primary);">Raj</span> Malhotra <span style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); background: var(--bg-surface); padding: 2px 8px; border-radius: 6px; margin-left: 4px;">(inactive)</span></div>
-                                                <div style="font-size: 12px; color: var(--text-tertiary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-clock" style="font-size: 10px;"></i> Last active: 15 Jan 2026</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Phone Number -->
-                            <div>
-                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Phone (Optional)</div>
-                                <div class="input-group" style="margin: 0;">
-                                    <i class="ph-fill ph-phone input-icon"></i>
-                                    <input type="tel" class="giant-input" placeholder="10-digit mobile number">
-                                </div>
-                            </div>
-                            
-                            <!-- Note -->
-                            <div>
-                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Note (Optional)</div>
-                                <div class="input-group" style="margin: 0;">
-                                    <i class="ph-fill ph-note-pencil input-icon"></i>
-                                    <input type="text" class="giant-input" placeholder="Short note (optional)">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="padding: 24px;">
-                            <button class="btn btn-full bg-credit" style="height: 56px; border-radius: 16px; font-size: 16px;"><i class="ph-bold ph-handshake"></i> Save Udhar — ₹ 500</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Journey Step 10 -->
-            <!-- 8. CreditStatusBottomSheet -->
-            <div class="screen-container">
-                <div class="screen-title">08 / Search Overlay (Drawer)</div>
-                <div class="screen" style="background: rgba(0,0,0,0.6);">
-                    <div class="top-bar" style="background: transparent;"></div>
-                    
-                    <div class="bottom-sheet">
-                        <div class="sheet-handle"></div>
-                        <div style="padding: 0 24px 16px 24px; display: flex; justify-content: space-between; align-items: center;">
-                            <h2 style="font-size: 22px; font-weight: 700;">Pending Credits</h2>
-                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
-                        </div>
-                        
-                        <div class="input-group" style="margin-top: 0;">
-                            <i class="ph ph-magnifying-glass input-icon"></i>
-                            <input type="text" class="giant-input" placeholder="Search pending...">
-                        </div>
-
-                        <div class="list-container" style="background: transparent;">
-                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-user"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 18px;">Ramesh Kumar</div>
-                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
-                                    </div>
-                                </div>
-                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 12,500</div>
-                            </div>
-                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 18px;">Suresh Electronics</div>
-                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
-                                    </div>
-                                </div>
-                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 4,300</div>
-                            </div>
-                            <div class="list-item" style="border: none; border-radius: 0; background: transparent; padding: 20px 0;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 18px;">Kiran Store</div>
-                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
-                                    </div>
-                                </div>
-                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 1,200</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Journey Step 11 -->
-            <!-- 11. AddNoteKeyboardOverlay -->
-            <div class="screen-container">
-                <div class="screen-title">11 / Add Note Keyboard State</div>
-                <div class="screen" style="background: rgba(0,0,0,0.6);">
-                    <div class="top-bar" style="background: transparent;"></div>
-                    
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column;">
-                        <!-- Input Bar -->
-                        <div style="background: var(--bg-surface); padding: 12px 16px; border-top: 1px solid var(--border-subtle); display: flex; gap: 12px; align-items: center;">
-                            <i class="ph-bold ph-pencil-simple" style="color: var(--text-tertiary); font-size: 24px;"></i>
-                            <input type="text" placeholder="Type items or note..." value="2 Milk, 1 Bread|" style="flex: 1; height: 40px; background: transparent; border: none; font-size: 16px; color: var(--text-primary); font-family: inherit; outline: none; caret-color: var(--brand-primary);" autofocus>
-                            <button class="btn bg-action" style="height: 40px; padding: 0 16px; border-radius: 100px; font-size: 14px;">Done</button>
-                        </div>
-                        
-                        <!-- Fake Native OS Keyboard area for visual mockup -->
-                        <div style="height: 290px; background: var(--bg-surface-raised); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center;">
-                            <div style="color: var(--text-tertiary); font-size: 14px; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <i class="ph-fill ph-keyboard" style="font-size: 32px;"></i>
-                                Native OS Keyboard Slides Up Here
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Journey Step 12 -->
             <!-- 5. ReceivePaymentScreen -->
             <div class="screen-container">
                 <div class="screen-title">05 / Receive Payment</div>
@@ -1577,8 +1057,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 13 -->
             <!-- 12. PaymentSuccessScreen -->
             <div class="screen-container">
                 <div class="screen-title">12 / Payment Success & Receipt</div>
@@ -1637,8 +1115,332 @@
                 </div>
             </div>
 
+            <!-- 6. ExpenseScreen -->
+            <div class="screen-container">
+                <div class="screen-title">06 / Record Expense</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-x"></i></button>
+                        <div class="top-bar-title">Add Expense</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div class="pill-scroll" style="margin-top: 16px;">
+                        <div class="pill active">Tea/Snacks</div>
+                        <div class="pill">Transport</div>
+                        <div class="pill">Salary</div>
+                        <div class="pill">Materials</div>
+                    </div>
 
-            <!-- Journey Step 14 -->
+                    <div class="amount-display-area" style="padding-bottom: 24px;">
+                        <div class="amount-value">
+                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
+                            150
+                        </div>
+                    </div>
+
+                    <div class="action-area" style="padding-bottom: 16px;">
+                        <button class="btn btn-full bg-given"><i class="ph-bold ph-minus"></i> Save Expense</button>
+                    </div>
+
+                    <div class="list-container">
+                        <div class="list-header">Recent Expenses</div>
+                        <div class="list-item" style="padding: 16px;">
+                            <div class="item-left">
+                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
+                                <div>
+                                    <div class="item-title" style="margin: 0; font-size: 15px;">Transport</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Today</div>
+                                </div>
+                            </div>
+                            <div class="item-amount text-given">₹ 40</div>
+                        </div>
+                        <div class="list-item" style="padding: 16px;">
+                            <div class="item-left">
+                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
+                                <div>
+                                    <div class="item-title" style="margin: 0; font-size: 15px;">Tea/Snacks</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Yesterday</div>
+                                </div>
+                            </div>
+                            <div class="item-amount text-given">₹ 60</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. CreditStatusBottomSheet -->
+            <div class="screen-container">
+                <div class="screen-title">08 / Search Overlay (Drawer)</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div class="bottom-sheet">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <h2 style="font-size: 22px; font-weight: 700;">Pending Credits</h2>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
+                        </div>
+                        
+                        <div class="input-group" style="margin-top: 0;">
+                            <i class="ph ph-magnifying-glass input-icon"></i>
+                            <input type="text" class="giant-input" placeholder="Search pending...">
+                        </div>
+
+                        <div class="list-container" style="background: transparent;">
+                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-user"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Ramesh Kumar</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 12,500</div>
+                            </div>
+                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Suresh Electronics</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 4,300</div>
+                            </div>
+                            <div class="list-item" style="border: none; border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Kiran Store</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 1,200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. AddNoteKeyboardOverlay -->
+            <div class="screen-container">
+                <div class="screen-title">11 / Add Note Keyboard State</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column;">
+                        <!-- Input Bar -->
+                        <div style="background: var(--bg-surface); padding: 12px 16px; border-top: 1px solid var(--border-subtle); display: flex; gap: 12px; align-items: center;">
+                            <i class="ph-bold ph-pencil-simple" style="color: var(--text-tertiary); font-size: 24px;"></i>
+                            <input type="text" placeholder="Type items or note..." value="2 Milk, 1 Bread|" style="flex: 1; height: 40px; background: transparent; border: none; font-size: 16px; color: var(--text-primary); font-family: inherit; outline: none; caret-color: var(--brand-primary);" autofocus>
+                            <button class="btn bg-action" style="height: 40px; padding: 0 16px; border-radius: 100px; font-size: 14px;">Done</button>
+                        </div>
+                        
+                        <!-- Fake Native OS Keyboard area for visual mockup -->
+                        <div style="height: 290px; background: var(--bg-surface-raised); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center;">
+                            <div style="color: var(--text-tertiary); font-size: 14px; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <i class="ph-fill ph-keyboard" style="font-size: 32px;"></i>
+                                Native OS Keyboard Slides Up Here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. ManageQuickItemsScreen -->
+            <div class="screen-container">
+                <div class="screen-title">16 / Manage Quick Items (Price Deck)</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Quick Setup</div>
+                        <button class="top-bar-btn"><i class="ph-bold ph-plus"></i></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
+                            These items appear above your numpad. Tap them while billing to instantly add their price and note.
+                        </div>
+
+                        <!-- Add New Item Inline Form -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 16px; border: 1px solid var(--brand-primary); margin-bottom: 32px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Add New Fast Item</div>
+                            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                                <div class="input-group" style="margin: 0; width: 64px; flex-shrink: 0;">
+                                    <input type="text" class="giant-input" placeholder="🚭" value="☕" style="padding: 0; text-align: center; font-size: 24px;">
+                                </div>
+                                <div class="input-group" style="margin: 0; flex: 1;">
+                                    <input type="text" class="giant-input" placeholder="Item Name" value="Special Tea" style="padding: 0 16px; font-size: 15px;">
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <div class="input-group" style="margin: 0; flex: 1;">
+                                    <i class="ph-bold ph-coins input-icon" style="left: 16px; font-size: 18px;"></i>
+                                    <input type="number" class="giant-input" placeholder="Fixed Price" value="15" style="padding-left: 44px; font-size: 15px; font-weight: 700;">
+                                </div>
+                                <button class="btn bg-action" style="height: 56px; padding: 0 24px; border-radius: 16px; font-size: 15px;">Save</button>
+                            </div>
+                        </div>
+
+                        <!-- Existing Items List -->
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">Active Items on Home Screen</div>
+                        
+                        <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 16px;">
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">☕</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Tea</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 10</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🥛</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Milk 1L</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 66</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🍞</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Bread</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 40</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">☰ Level 4: The Navigation Drawer (Main Sidebar)</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Accessed by swiping right from the edge or tapping the Hamburger Menu on the Home screen.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
+            <!-- 22. NavigationDrawerScreen -->
+            <div class="screen-container">
+                <div class="screen-title">22 / Navigation Drawer (Hamburger Menu)</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6); position: relative; overflow: hidden;">
+                    <!-- The Background Screen (blurred slightly) -->
+                    <div style="position: absolute; inset: 0; padding: 24px; filter: blur(2px);">
+                        <div class="top-bar" style="background: transparent;">
+                            <button class="top-bar-btn"><i class="ph ph-list"></i></button>
+                            <div class="top-bar-title">Ledger</div>
+                            <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- The Actual Drawer sliding from Left -->
+                    <div style="position: absolute; top: 0; bottom: 0; left: 0; width: 85%; background: var(--bg-surface); box-shadow: 20px 0 60px rgba(0,0,0,0.5); z-index: 100; display: flex; flex-direction: column;">
+                        
+                        <!-- Drawer Header -->
+                        <div style="padding: 32px 24px 24px 24px; background: var(--bg-surface-raised); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <div style="width: 56px; height: 56px; border-radius: 16px; background: var(--brand-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);">S</div>
+                                <div>
+                                    <div style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">Suresh Provision</div>
+                                    <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;"><i class="ph-fill ph-check-circle" style="color: var(--color-received);"></i> Data Synced</div>
+                                </div>
+                            </div>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px; margin-right: -8px;"><i class="ph-bold ph-x"></i></button>
+                        </div>
+                        
+                        <!-- Navigation Links -->
+                        <div style="flex: 1; padding: 16px 24px; overflow-y: auto;">
+                            
+                            <div style="font-size: 12px; font-weight: 800; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 8px;">Main Menu</div>
+                            
+                            <!-- Actively selected state -->
+                            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(99, 102, 241, 0.1); border-radius: 16px; margin-bottom: 8px;">
+                                <i class="ph-fill ph-squares-four" style="font-size: 24px; color: var(--brand-primary);"></i>
+                                <span style="font-size: 15px; font-weight: 700; color: var(--brand-primary);">Home (Numpad)</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <i class="ph-bold ph-users text-secondary" style="font-size: 24px;"></i>
+                                    <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Customers</span>
+                                </div>
+                                <div style="background: rgba(239, 68, 68, 0.1); color: var(--color-given); font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 100px;">3 Risky</div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <i class="ph-bold ph-chart-line-up text-secondary" style="font-size: 24px;"></i>
+                                <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Reports & Analytics</span>
+                            </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <i class="ph-bold ph-calendar-check text-secondary" style="font-size: 24px;"></i>
+                                    <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">End of Day (Galla)</span>
+                                </div>
+                            </div>
+
+                            <div style="width: 100%; height: 1px; background: var(--border-subtle); margin: 16px 0;"></div>
+                            
+                            <div style="font-size: 12px; font-weight: 800; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Tools & Setup</div>
+
+                            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <i class="ph-bold ph-fast-forward-circle text-secondary" style="font-size: 24px;"></i>
+                                <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Quick Items Setup</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <i class="ph-bold ph-qr-code text-secondary" style="font-size: 24px;"></i>
+                                <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Offline Device Sync</span>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 16px; margin-bottom: 8px;">
+                                <i class="ph-bold ph-gear text-secondary" style="font-size: 24px;"></i>
+                                <span style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Application Settings</span>
+                            </div>
+
+                        </div>
+                        
+                        <!-- Lock Action -->
+                        <div style="padding: 24px; border-top: 1px solid var(--border-subtle);">
+                            <button class="btn btn-full bg-surface" style="height: 56px; border-radius: 16px; justify-content: flex-start; padding-left: 20px; font-weight: 600;">
+                                <i class="ph-bold ph-lock-key" style="font-size: 20px; margin-right: 12px;"></i> Lock App
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">👥 Path 1: The People Hub</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Managing relationships, tracking high-risk debt, and making precise corrections.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
             <!-- 3. CustomerListScreen -->
             <div class="screen-container">
                 <div class="screen-title">03 / Customer Directory</div>
@@ -1711,8 +1513,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 15 -->
             <!-- 10. AddNewCustomerDrawer -->
             <div class="screen-container">
                 <div class="screen-title">10 / Add New Customer (Drawer)</div>
@@ -1751,8 +1551,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 16 -->
             <!-- 4. CustomerDetailScreen -->
             <div class="screen-container">
                 <div class="screen-title">04 / Customer Profile</div>
@@ -1854,8 +1652,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 17 -->
             <!-- 13. TransactionDetailModal -->
             <div class="screen-container">
                 <div class="screen-title">13 / Transaction Detail & Edit</div>
@@ -1906,7 +1702,11 @@
             </div>
 
 
-            <!-- Journey Step 18 -->
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">💰 Path 2: The Money Hub</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Instant accounting. No calculators. Just cold, hard cash insights before closing up the shop.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
             <!-- 7. ReportScreen -->
             <div class="screen-container">
                 <div class="screen-title">07 / Reports Dashboard</div>
@@ -1975,8 +1775,6 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 19 -->
             <!-- 14. CashDrawerReconcilerScreen -->
             <div class="screen-container">
                 <div class="screen-title">14 / Cash Drawer (Galla) Check</div>
@@ -2037,7 +1835,11 @@
             </div>
 
 
-            <!-- Journey Step 20 -->
+            <div style="grid-column: 1 / -1; margin-top: 80px; margin-bottom: 24px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">⚙️ Path 3: The Setup Hub</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Hidden power-user settings. Adjusting automation, backing up data, and peer-to-peer ledger splitting.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
             <!-- 9. SettingsScreen -->
             <div class="screen-container">
                 <div class="screen-title">09 / Settings Menu</div>
@@ -2122,225 +1924,69 @@
                 </div>
             </div>
 
-
-            <!-- Journey Step 21 -->
-            <!-- 16. ManageQuickItemsScreen -->
+            <!-- 18. LocalSyncScreen -->
             <div class="screen-container">
-                <div class="screen-title">16 / Manage Quick Items (Price Deck)</div>
+                <div class="screen-title">18 / Offline Device Sync (Phase 10)</div>
                 <div class="screen">
                     <div class="top-bar">
                         <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
-                        <div class="top-bar-title" style="font-size: 18px;">Quick Setup</div>
-                        <button class="top-bar-btn"><i class="ph-bold ph-plus"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Direct Sync (No Internet)</div>
+                        <button class="top-bar-btn"></button>
                     </div>
                     
                     <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
-                            These items appear above your numpad. Tap them while billing to instantly add their price and note.
-                        </div>
-
-                        <!-- Add New Item Inline Form -->
-                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 16px; border: 1px solid var(--brand-primary); margin-bottom: 32px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);">
-                            <div style="font-size: 13px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Add New Fast Item</div>
-                            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-                                <div class="input-group" style="margin: 0; width: 64px; flex-shrink: 0;">
-                                    <input type="text" class="giant-input" placeholder="🚭" value="☕" style="padding: 0; text-align: center; font-size: 24px;">
-                                </div>
-                                <div class="input-group" style="margin: 0; flex: 1;">
-                                    <input type="text" class="giant-input" placeholder="Item Name" value="Special Tea" style="padding: 0 16px; font-size: 15px;">
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 12px;">
-                                <div class="input-group" style="margin: 0; flex: 1;">
-                                    <i class="ph-bold ph-coins input-icon" style="left: 16px; font-size: 18px;"></i>
-                                    <input type="number" class="giant-input" placeholder="Fixed Price" value="15" style="padding-left: 44px; font-size: 15px; font-weight: 700;">
-                                </div>
-                                <button class="btn bg-action" style="height: 56px; padding: 0 24px; border-radius: 16px; font-size: 15px;">Save</button>
+                        <div style="background: var(--bg-surface-raised); border-radius: 16px; padding: 16px; border: 1px dashed var(--brand-primary); margin-bottom: 32px; display: flex; gap: 12px; align-items: flex-start;">
+                            <i class="ph-fill ph-wifi-high" style="color: var(--brand-primary); font-size: 24px;"></i>
+                            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                Send your complete ledger directly to another phone or computer. <strong style="color: var(--text-primary);">Both devices must be on the same WiFi network or Hotspot. No internet required.</strong>
                             </div>
                         </div>
 
-                        <!-- Existing Items List -->
-                        <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">Active Items on Home Screen</div>
-                        
-                        <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 16px;">
-                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">☕</div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Tea</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 10</div>
-                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
-                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <!-- Segmented Control for Sync Direction -->
+                        <div class="segmented-control" style="margin-bottom: 32px; height: 48px;">
+                            <button class="seg-btn active" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-qr-code text-primary"></i> Share Data</button>
+                            <button class="seg-btn" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-scan text-secondary"></i> Receive (Scan)</button>
+                        </div>
 
-                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🥛</div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Milk 1L</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 66</div>
-                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
-                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
-                                    </button>
+                        <!-- Share View (QR Code) -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                            <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">Scan with receiving device</div>
+                            
+                            <div style="width: 240px; height: 240px; background: white; border-radius: 20px; padding: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.1);">
+                                <!-- Mockup of a QR Code -->
+                                <div style="width: 100%; height: 100%; border: 4px solid black; position: relative;">
+                                    <div style="position: absolute; top: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; top: 10%; right: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; bottom: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; top: 40%; left: 40%; right: 10%; bottom: 10%; background: repeating-linear-gradient(45deg, black, black 10px, white 10px, white 20px);"></div>
+                                    <div style="position: absolute; top: 20px; left: 40%; width: 20%; height: 20%; background: black;"></div>
                                 </div>
                             </div>
                             
-                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🍞</div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Bread</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 40</div>
-                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
-                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Or open this address on the other device:</div>
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 24px; border-radius: 12px; font-family: monospace; font-size: 18px; font-weight: 700; color: var(--brand-primary); user-select: text;">
+                                192.168.1.5:8080
                             </div>
                         </div>
+
+                        <!-- Receive View (Camera Scanner UI - Currently hidden in mockup but visually implied) -->
+                        <!-- 
+                        <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center;">
+                            <div style="width: 280px; height: 280px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 24px; position: relative;">
+                                <div style="position: absolute; top: -2px; left: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 24px 0 0 0;"></div>
+                                <div style="position: absolute; top: -2px; right: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 24px 0 0;"></div>
+                                <div style="position: absolute; bottom: -2px; left: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 0 0 0 24px;"></div>
+                                <div style="position: absolute; bottom: -2px; right: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 0 24px 0;"></div>
+                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(239, 68, 68, 0.5); box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);"></div>
+                            </div>
+                            <div style="margin-top: 24px; font-size: 15px; color: var(--text-secondary);">Point camera at QR code on sharing device</div>
+                        </div>
+                        -->
 
                     </div>
                 </div>
             </div>
 
-
-            <!-- Journey Step 22 -->
-            <!-- 26. EditCategoriesScreen (PRD §4.3 - More → Edit Categories) -->
-            <div class="screen-container">
-                <div class="screen-title">26 / Edit Expense Categories</div>
-                <div class="screen">
-                    <div class="top-bar">
-                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
-                        <div class="top-bar-title" style="font-size: 18px;">Expense Categories</div>
-                        <button class="top-bar-btn"><i class="ph-bold ph-plus"></i></button>
-                    </div>
-                    
-                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1; overflow-y: auto;">
-                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
-                            Manage your expense categories. Tap to rename, drag to reorder. Max 15 categories.
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Active Categories</div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--brand-primary);">6 / 15</div>
-                        </div>
-
-                        <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-                            <div class="input-group" style="margin: 0; flex: 1;">
-                                <i class="ph-bold ph-tag input-icon" style="font-size: 18px;"></i>
-                                <input type="text" class="giant-input" placeholder="New category name" style="font-size: 15px;">
-                            </div>
-                            <button class="btn bg-action" style="height: 56px; padding: 0 24px; border-radius: 16px; font-size: 15px;">Add</button>
-                        </div>
-                        
-                        <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 12px;">
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-coffee"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Chai/Snacks</div>
-                                        <div class="item-subtitle" style="font-size: 12px;">32 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
-                                </div>
-                            </div>
-                            
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-car"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Transport</div>
-                                        <div class="item-subtitle" style="font-size: 12px;">18 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-house-line"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Rent</div>
-                                        <div class="item-subtitle" style="font-size: 12px;">6 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-package"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Supplier Payment</div>
-                                        <div class="item-subtitle" style="font-size: 12px;">45 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-users"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px;">Staff Salary</div>
-                                        <div class="item-subtitle" style="font-size: 12px;">12 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Hidden category -->
-                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px; opacity: 0.5;">
-                                <div class="item-left" style="gap: 16px;">
-                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
-                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-dots-three"></i></div>
-                                    <div>
-                                        <div class="item-title" style="margin: 0; font-size: 16px; color: var(--text-secondary);">Other <span style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); background: var(--bg-surface-raised); padding: 2px 8px; border-radius: 6px; margin-left: 4px;">hidden</span></div>
-                                        <div class="item-subtitle" style="font-size: 12px;">2 expenses</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
-                                    <button style="background: transparent; border: none; color: var(--brand-primary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye-slash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Journey Step 23 -->
             <!-- 17. KhataTransferScreen -->
             <div class="screen-container">
                 <div class="screen-title">17 / Transfer Balance (Split Bill)</div>
@@ -2407,142 +2053,165 @@
             </div>
 
 
-            <!-- Journey Step 24 -->
-            <!-- 18. LocalSyncScreen -->
+            <div class="tree-section-header" style="grid-column: 1 / -1; margin-top: 60px; margin-bottom: 20px; width: 100%; max-width: 1000px; text-align: left;">
+                <div style="font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -1px;">✨ Additional App States</div>
+                <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.5; font-weight: 500;">Empty states, edit modes, and system dialogs completing the full functional scope.</div>
+                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin-top: 32px;"></div>
+            </div>
+
+            <!-- 23. EmptyStateScreen -->
             <div class="screen-container">
-                <div class="screen-title">18 / Offline Device Sync (Phase 10)</div>
+                <div class="screen-title">23 / Empty Dashboard State</div>
                 <div class="screen">
                     <div class="top-bar">
-                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
-                        <div class="top-bar-title" style="font-size: 18px;">Direct Sync (No Internet)</div>
-                        <button class="top-bar-btn"></button>
+                        <button class="top-bar-btn"><i class="ph ph-list"></i></button>
+                        <div class="top-bar-title">Ledger</div>
+                        <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
                     </div>
                     
-                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-                        <div style="background: var(--bg-surface-raised); border-radius: 16px; padding: 16px; border: 1px dashed var(--brand-primary); margin-bottom: 32px; display: flex; gap: 12px; align-items: flex-start;">
-                            <i class="ph-fill ph-wifi-high" style="color: var(--brand-primary); font-size: 24px;"></i>
-                            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                                Send your complete ledger directly to another phone or computer. <strong style="color: var(--text-primary);">Both devices must be on the same WiFi network or Hotspot. No internet required.</strong>
-                            </div>
+                    <div class="balance-summary">
+                        <div class="balance-card primary" style="align-items: center; justify-content: center; flex-direction: row; gap: 12px;">
+                            <span class="balance-label">Current Balance</span>
+                            <span class="balance-val" style="font-size: 24px;">₹ 0</span>
                         </div>
+                    </div>
 
-                        <!-- Segmented Control for Sync Direction -->
-                        <div class="segmented-control" style="margin-bottom: 32px; height: 48px;">
-                            <button class="seg-btn active" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-qr-code text-primary"></i> Share Data</button>
-                            <button class="seg-btn" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-scan text-secondary"></i> Receive (Scan)</button>
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center;">
+                        <div style="width: 80px; height: 80px; border-radius: 24px; background: var(--bg-surface-raised); border: 1px dashed var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); font-size: 40px; margin-bottom: 24px;">
+                            <i class="ph-bold ph-book-open-text"></i>
                         </div>
-
-                        <!-- Share View (QR Code) -->
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
-                            <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">Scan with receiving device</div>
-                            
-                            <div style="width: 240px; height: 240px; background: white; border-radius: 20px; padding: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.1);">
-                                <!-- Mockup of a QR Code -->
-                                <div style="width: 100%; height: 100%; border: 4px solid black; position: relative;">
-                                    <div style="position: absolute; top: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
-                                    <div style="position: absolute; top: 10%; right: 10%; width: 20%; height: 20%; background: black;"></div>
-                                    <div style="position: absolute; bottom: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
-                                    <div style="position: absolute; top: 40%; left: 40%; right: 10%; bottom: 10%; background: repeating-linear-gradient(45deg, black, black 10px, white 10px, white 20px);"></div>
-                                    <div style="position: absolute; top: 20px; left: 40%; width: 20%; height: 20%; background: black;"></div>
-                                </div>
-                            </div>
-                            
-                            <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Or open this address on the other device:</div>
-                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 24px; border-radius: 12px; font-family: monospace; font-size: 18px; font-weight: 700; color: var(--brand-primary); user-select: text;">
-                                192.168.1.5:8080
-                            </div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px;">No Entries Yet</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 32px; font-weight: 500;">Your khata book is perfectly clean. Use the actions below to record your first sale or credit.</div>
+                    </div>
+                    
+                    <div class="action-area" style="padding-top: 24px; border-top: 1px solid var(--border-subtle);">
+                        <div class="action-grid">
+                            <button class="btn bg-received"><i class="ph-bold ph-plus"></i> Sale</button>
+                            <button class="btn bg-given"><i class="ph-bold ph-minus"></i> Expense</button>
+                            <button class="btn bg-credit"><i class="ph-bold ph-handshake"></i> Credit</button>
+                            <button class="btn bg-action"><i class="ph-bold ph-arrow-down-left"></i> Receive</button>
                         </div>
-
-                        <!-- Receive View (Camera Scanner UI - Currently hidden in mockup but visually implied) -->
-                        <!-- 
-                        <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center;">
-                            <div style="width: 280px; height: 280px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 24px; position: relative;">
-                                <div style="position: absolute; top: -2px; left: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 24px 0 0 0;"></div>
-                                <div style="position: absolute; top: -2px; right: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 24px 0 0;"></div>
-                                <div style="position: absolute; bottom: -2px; left: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 0 0 0 24px;"></div>
-                                <div style="position: absolute; bottom: -2px; right: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 0 24px 0;"></div>
-                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(239, 68, 68, 0.5); box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);"></div>
-                            </div>
-                            <div style="margin-top: 24px; font-size: 15px; color: var(--text-secondary);">Point camera at QR code on sharing device</div>
-                        </div>
-                        -->
-
                     </div>
                 </div>
             </div>
 
-
-            <!-- Journey Step 25 -->
-            <!-- 25. BackupRestoreScreen (PRD §10.1, §3.1 - More → Backup & Restore) -->
+            <!-- 24. EditCustomerScreen -->
             <div class="screen-container">
-                <div class="screen-title">25 / Backup & Restore</div>
-                <div class="screen">
-                    <div class="top-bar">
+                <div class="screen-title">24 / Edit Customer Profile</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6); position: relative;">
+                    <!-- The Background Screen (blurred slightly) -->
+                    <div style="position: absolute; inset: 0; padding: 24px; filter: blur(2px);">
+                        <div class="top-bar" style="background: transparent;">
+                            <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                            <div class="top-bar-title" style="font-size: 18px;">Ramesh Kumar</div>
+                            <button class="top-bar-btn"><i class="ph ph-pencil-simple"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- The Bottom Sheet -->
+                    <div class="bottom-sheet" style="height: 60%;">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 24px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 20px; font-weight: 700;">Edit Customer</div>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph-bold ph-x"></i></button>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="ph-bold ph-user input-icon"></i>
+                            <input type="text" class="giant-input" value="Ramesh Kumar">
+                        </div>
+
+                        <div class="input-group">
+                            <i class="ph-bold ph-phone input-icon"></i>
+                            <input type="tel" class="giant-input" value="9876543210">
+                        </div>
+                        
+                        <div class="input-group">
+                            <i class="ph-bold ph-map-pin input-icon"></i>
+                            <input type="text" class="giant-input" value="Sector 42, Nearby">
+                        </div>
+
+                        <div style="padding: 24px;">
+                            <button class="btn btn-full bg-action" style="font-size: 18px; margin-bottom: 16px;">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 25. ChangePINScreen -->
+            <div class="screen-container">
+                <div class="screen-title">25 / Change Security PIN</div>
+                <div class="screen" style="background: var(--bg-base);">
+                    <div class="top-bar" style="background: transparent;">
                         <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
-                        <div class="top-bar-title" style="font-size: 18px;">Backup & Restore</div>
+                        <div class="top-bar-title" style="font-size: 16px; color: var(--text-secondary); font-weight: 600;">Update PIN</div>
                         <button class="top-bar-btn"></button>
                     </div>
                     
-                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1; gap: 24px; overflow-y: auto;">
-
-                        <!-- Last Backup Info Card -->
-                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 24px; border: 1px solid var(--border-subtle); text-align: center;">
-                            <div style="width: 56px; height: 56px; border-radius: 20px; background: var(--color-received-bg); color: var(--color-received); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto;">
-                                <i class="ph-fill ph-shield-check"></i>
-                            </div>
-                            <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Last Backup</div>
-                            <div style="font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">22 Feb 2026, 09:30 PM</div>
-                            <div style="font-size: 13px; color: var(--text-secondary);">2 days ago · 12,450 entries · 1.2 MB</div>
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px 24px 100px 24px;">
+                        
+                        <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--bg-surface); border: 1px dashed var(--border-strong); color: var(--color-warning); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px;">
+                            <i class="ph-bold ph-lock-key-open"></i>
                         </div>
                         
-                        <!-- Save Backup Section -->
-                        <div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Create Backup</div>
-                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--brand-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;"><i class="ph-bold ph-cloud-arrow-up"></i></div>
-                                    <div>
-                                        <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Save to Downloads</div>
-                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Creates a .slbackup file you can share via WhatsApp or Google Drive</div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-full bg-action" style="height: 52px; border-radius: 14px; font-size: 15px;"><i class="ph-bold ph-download-simple"></i> Save Backup Now</button>
-                            </div>
+                        <div style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px;">Enter Current PIN</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 48px; font-weight: 500;">Verify your identity before updating.</div>
+                        
+                        <!-- Partially Filled PIN indicator dots -->
+                        <div style="display: flex; gap: 16px;">
+                            <div style="width: 16px; height: 16px; border-radius: 50%; background: var(--text-primary);"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; background: var(--text-primary);"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
                         </div>
+                    </div>
 
-                        <!-- Encryption Toggle -->
-                        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <i class="ph-bold ph-lock-simple" style="font-size: 22px; color: var(--color-credit);"></i>
-                                <div>
-                                    <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Encrypt Backup</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">Protect with a passphrase</div>
-                                </div>
-                            </div>
-                            <div style="width: 52px; height: 32px; border-radius: 100px; background: var(--border-strong); position: relative; cursor: pointer;">
-                                <div style="width: 26px; height: 26px; border-radius: 50%; background: white; position: absolute; top: 3px; left: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>
-                            </div>
+                    <!-- Lock Minimalist Numpad -->
+                    <div class="numpad" style="padding-bottom: 40px; background: transparent;">
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">1</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">2</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">3</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">4</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">5</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">6</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">7</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">8</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">9</button>
+                        <button style="background: transparent;"></button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">0</button><button style="background: transparent; font-size: 28px; color: var(--text-secondary);"><i class="ph-bold ph-backspace"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 26. RestoreBackupScreen -->
+            <div class="screen-container">
+                <div class="screen-title">26 / Import Backup Data</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6); position: relative;">
+                    <!-- The Background Screen (Settings Menu Content Blurred) -->
+                    <div style="position: absolute; inset: 0; padding: 24px; filter: blur(2px);">
+                        <div class="top-bar" style="background: transparent;">
+                            <button class="top-bar-btn"><i class="ph ph-arrow-left"></i></button>
+                            <div class="top-bar-title">Settings</div>
+                            <button class="top-bar-btn"></button>
                         </div>
-
-                        <!-- Restore Section -->
-                        <div>
-                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Restore Data</div>
-                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;"><i class="ph-bold ph-cloud-arrow-down"></i></div>
-                                    <div>
-                                        <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Restore from Backup</div>
-                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Replace all current data with a .slbackup file</div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-full bg-surface" style="height: 52px; border-radius: 14px; font-size: 15px; border-color: var(--border-strong);"><i class="ph-bold ph-folder-open"></i> Choose Backup File</button>
+                    </div>
+                    
+                    <!-- Native System Dialog Fake (Center) -->
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; padding: 24px;">
+                        <div style="width: 100%; background: var(--bg-surface-raised); border-radius: 24px; z-index: 100; padding: 24px; border: 1px solid var(--border-subtle); box-shadow: 0 32px 64px rgba(0,0,0,0.5);">
+                            <div style="width: 64px; height: 64px; border-radius: 20px; background: rgba(99, 102, 241, 0.1); color: var(--brand-primary); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 20px auto;">
+                                <i class="ph-bold ph-folder-open"></i>
                             </div>
-                        </div>
+                            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 12px; letter-spacing: -0.5px;">Choose Backup File</div>
+                            <div style="font-size: 14px; color: var(--text-secondary); text-align: center; line-height: 1.5; margin-bottom: 24px; font-weight: 500;">
+                                Select a previously exported <code style="background: var(--bg-base); padding: 2px 6px; border-radius: 4px; color: var(--color-received);">.json</code> file to restore your entire ledger and customer history.
+                            </div>
+                            
+                            <!-- Fake native file selection row -->
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; cursor: pointer;">
+                                <i class="ph-fill ph-file-code" style="color: var(--color-received); font-size: 24px;"></i>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">ledger_backup.json</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">24.5 KB • Downloads Folder</div>
+                                </div>
+                                <i class="ph-bold ph-check-circle" style="color: var(--brand-primary); font-size: 20px;"></i>
+                            </div>
 
-                        <!-- Warning Notice -->
-                        <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: 16px; padding: 16px; display: flex; gap: 12px; align-items: flex-start;">
-                            <i class="ph-fill ph-warning-circle" style="color: var(--color-given); font-size: 20px; flex-shrink: 0; margin-top: 2px;"></i>
-                            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Restoring a backup will <strong style="color: var(--color-given);">replace all current data</strong>. Make sure you've backed up first. This action cannot be undone.</div>
+                            <button class="btn btn-full bg-action" style="margin-bottom: 12px;">Restore Data</button>
+                            <button class="btn btn-full bg-surface" style="color: var(--text-secondary);">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -2550,83 +2219,5 @@
 
         </div>
     </div>
-
-    <!-- Mobile Screen Counter -->
-    <div class="screen-counter" id="screenCounter">
-        <button class="screen-counter-nav" id="prevScreen"><i class="ph-bold ph-caret-left"></i></button>
-        <div class="screen-counter-title" id="counterTitle">1 / 26</div>
-        <button class="screen-counter-nav" id="nextScreen"><i class="ph-bold ph-caret-right"></i></button>
-    </div>
-    <div class="screen-counter-progress" id="progressBar" style="width: 0%;"></div>
-
-    <script>
-    (function() {
-        const grid = document.querySelector('.grid');
-        const containers = document.querySelectorAll('.screen-container');
-        const counterTitle = document.getElementById('counterTitle');
-        const progressBar = document.getElementById('progressBar');
-        const prevBtn = document.getElementById('prevScreen');
-        const nextBtn = document.getElementById('nextScreen');
-        const totalScreens = containers.length;
-        let currentIndex = 0;
-
-        // Get screen titles
-        const titles = [];
-        containers.forEach(c => {
-            const t = c.querySelector('.screen-title');
-            titles.push(t ? t.textContent.trim() : '');
-        });
-
-        function updateCounter() {
-            if (!grid) return;
-            const scrollLeft = grid.scrollLeft;
-            const scrollWidth = grid.scrollWidth - grid.clientWidth;
-            
-            // Find which screen is most centered
-            let closestIdx = 0;
-            let closestDist = Infinity;
-            containers.forEach((c, i) => {
-                const rect = c.getBoundingClientRect();
-                const gridRect = grid.getBoundingClientRect();
-                const center = rect.left + rect.width / 2;
-                const gridCenter = gridRect.left + gridRect.width / 2;
-                const dist = Math.abs(center - gridCenter);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closestIdx = i;
-                }
-            });
-
-            currentIndex = closestIdx;
-            const screenNum = currentIndex + 1;
-            counterTitle.textContent = titles[currentIndex] || (screenNum + ' / ' + totalScreens);
-
-            // Progress bar
-            const progress = scrollWidth > 0 ? (scrollLeft / scrollWidth) * 100 : 0;
-            progressBar.style.width = progress + '%';
-        }
-
-        if (grid) {
-            grid.addEventListener('scroll', updateCounter, { passive: true });
-            updateCounter();
-        }
-
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                if (currentIndex > 0 && containers[currentIndex - 1]) {
-                    containers[currentIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                }
-            });
-        }
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                if (currentIndex < totalScreens - 1 && containers[currentIndex + 1]) {
-                    containers[currentIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                }
-            });
-        }
-    })();
-    </script>
 </body>
 </html>
