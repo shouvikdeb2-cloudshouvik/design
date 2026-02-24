@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleLedger - Premium $1000 App UI</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            /* 
+              PREMIUM COLOR SYSTEM 
+              Based on top-tier Fintech & SaaS (Stripe, Ramp, Linear) 
+            */
+            --brand-primary: #6366F1; /* Indigo 500 */
+            --brand-primary-hover: #4F46E5;
+            
+            /* High-End Functional Colors */
+            --color-received: #10B981; /* Precise Emerald */
+            --color-received-bg: rgba(16, 185, 129, 0.1);
+            --color-given: #EF4444;    /* Sharp Rose/Red */
+            --color-given-bg: rgba(239, 68, 68, 0.1);
+            --color-credit: #F59E0B;   /* Rich Amber */
+            --color-credit-bg: rgba(245, 158, 11, 0.1);
+            --color-warning: #EF4444;
+
+            /* Dark Theme Variables (Ultra Premium Obsidian Dark) */
+            --bg-base: #09090B;      /* True deep obsidian */
+            --bg-surface: #121214;   /* Lifted surface */
+            --bg-surface-raised: #1C1C1F; 
+            
+            --border-subtle: #27272A;
+            --border-strong: #3F3F46;
+            
+            --text-primary: #FAFAFA;
+            --text-secondary: #A1A1AA;
+            --text-tertiary: #52525B;
+
+            --presentation-bg: #000000;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Variables (Ultra Premium Clean White/Gray) */
+            --brand-primary: #4F46E5; 
+            --brand-primary-hover: #4338CA;
+
+            --bg-base: #F4F4F5;      
+            --bg-surface: #FFFFFF;   
+            --bg-surface-raised: #FFFFFF; 
+            
+            --border-subtle: #E4E4E7;
+            --border-strong: #D4D4D8;
+            
+            --text-primary: #09090B;
+            --text-secondary: #71717A;
+            --text-tertiary: #A1A1AA;
+
+            --presentation-bg: #E4E4E7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--presentation-bg);
+            color: var(--text-primary);
+            padding-bottom: 96px;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        .presentation-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .presentation-header h1 {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFF 0%, #A1A1AA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        [data-theme="light"] .presentation-header h1 {
+            background: linear-gradient(135deg, #09090B 0%, #71717A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .presentation-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.5;
+        }
+
+        .theme-toggle-container {
+            display: inline-flex;
+            background: var(--bg-surface);
+            padding: 6px;
+            border-radius: 100px;
+            border: 1px solid var(--border-subtle);
+            gap: 4px;
+        }
+        .theme-toggle-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .theme-toggle-btn.active {
+            background: var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            margin-top: 80px;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        .grid {
+            display: flex;
+            gap: 56px;
+            padding: 0 24px 80px 24px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            align-items: flex-start;
+            scrollbar-width: thin;
+            scroll-behavior: smooth;
+            scroll-snap-type: x proximity;
+        }
+        .grid::-webkit-scrollbar {
+            height: 8px;
+        }
+        .grid::-webkit-scrollbar-track {
+            background: var(--bg-surface);
+            border-radius: 4px;
+        }
+        .grid::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 4px;
+        }
+
+        .screen-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+        }
+
+        .screen-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Physical Screen Mockup - Bezel-less look */
+        .screen {
+            width: 390px;
+            height: 844px; /* iPhone 14 Pro aspect ratio */
+            background: var(--bg-base);
+            border: 12px solid #18181B;
+            border-radius: 54px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 0 1px #3F3F46, 0 32px 64px -16px rgba(0,0,0,0.5);
+        }
+        [data-theme="light"] .screen {
+            border-color: #FAFAFA;
+            box-shadow: 0 0 0 1px #E4E4E7, 0 32px 64px -16px rgba(0,0,0,0.1);
+        }
+
+        /* Header / Top Bar */
+        .top-bar {
+            height: 56px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-base);
+            flex-shrink: 0;
+            z-index: 10;
+            margin-top: 32px; /* Reduced to fit UI */
+        }
+        .top-bar-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+        }
+        .top-bar-btn {
+            background: transparent;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .top-bar-btn:active {
+            background: var(--bg-surface-raised);
+        }
+
+        /* Status Cards / Mini Balance */
+        .balance-summary {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+        }
+        .balance-card {
+            flex: 1;
+            background: var(--bg-surface);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0; /* Add this for flexbox text overflow handling */
+        }
+        .balance-card.primary {
+            background: var(--bg-surface-raised);
+        }
+        .balance-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .balance-val {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        /* Large Amount Input Display */
+        .amount-display-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 24px;
+            text-align: center;
+        }
+        .amount-value {
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -3px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .amount-value-dim {
+            color: var(--text-tertiary);
+        }
+
+        /* Numpad - Edge to Edge, High End */
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 0 24px 24px 24px;
+            background-color: var(--bg-base);
+        }
+        .numpad button {
+            background-color: transparent;
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.1s ease;
+        }
+        .numpad button:active {
+            background-color: var(--bg-surface-raised);
+            transform: scale(0.95);
+        }
+
+        /* Premium Action Buttons */
+        .action-area {
+            padding: 0 24px 32px 24px;
+            background: var(--bg-base);
+        }
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .btn {
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.1s ease, filter 0.2s ease;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn-full {
+            width: 100%;
+        }
+        
+        /* Vibrant Solid Buttons */
+        .btn.bg-received { background-color: var(--color-received); color: #FFFFFF; }
+        .btn.bg-given { background-color: var(--color-given); color: #FFFFFF; }
+        .btn.bg-credit { background-color: var(--color-credit); color: #FFFFFF; }
+        .btn.bg-action { background-color: var(--brand-primary); color: #FFFFFF; }
+        .btn.bg-surface { background-color: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); }
+
+        /* Minimal Dropdown/Pills */
+        .pill-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 16px 24px;
+            overflow-x: auto;
+            white-space: nowrap;
+            background: var(--bg-base);
+            scrollbar-width: none;
+        }
+        .pill-scroll::-webkit-scrollbar { display: none; }
+        .pill {
+            padding: 10px 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .pill.active {
+            background: var(--text-primary);
+            color: var(--bg-base);
+            border-color: var(--text-primary);
+        }
+
+        /* Undo Banner - Floating Island Style */
+        .undo-banner {
+            background: var(--bg-surface-raised);
+            color: var(--text-primary);
+            padding: 16px 24px;
+            border-radius: 100px;
+            margin: 0 24px 24px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.3);
+        }
+        [data-theme="light"] .undo-banner {
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+        }
+        .undo-action {
+            color: var(--brand-primary);
+            background: transparent;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        
+        .scroll-horizontal {
+            display: flex;
+            gap: 16px;
+            padding: 0 24px 24px 24px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            flex-shrink: 0;
+        }
+        .scroll-horizontal::-webkit-scrollbar { display: none; }
+
+        /* Lists */
+        .list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--bg-base);
+        }
+        .list-header {
+            padding: 24px 0 8px 0;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+        .list-item {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-surface);
+            border-radius: 24px;
+            border: 1px solid var(--border-subtle);
+        }
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .item-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: var(--bg-surface-raised);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-primary);
+        }
+        .item-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+        .item-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .item-amount {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: right;
+            letter-spacing: -0.5px;
+        }
+        .item-amount-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Detail Top Card - Ultra Premium Hero */
+        .detail-hero {
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: var(--bg-base);
+        }
+        .detail-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 28px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+        }
+
+        /* Inputs */
+        .input-group {
+            position: relative;
+            margin: 16px 24px;
+        }
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: var(--text-tertiary);
+        }
+        .giant-input {
+            width: 100%;
+            height: 56px;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0 24px 0 56px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            color: var(--text-primary);
+            outline: none;
+            font-family: inherit;
+        }
+        .giant-input::placeholder {
+            color: var(--text-tertiary);
+        }
+        .giant-input:focus {
+            border-color: var(--brand-primary);
+            background: var(--bg-base);
+        }
+
+        /* Bottom Sheet Fake */
+        .bottom-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-base);
+            border-radius: 32px 32px 0 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            height: 85%;
+            padding-top: 12px;
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.8);
+        }
+        [data-theme="light"] .bottom-sheet {
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.1);
+        }
+        .sheet-handle {
+            width: 40px;
+            height: 5px;
+            background: var(--border-strong);
+            border-radius: 10px;
+            margin: 0 auto 24px auto;
+        }
+
+        /* Settings Toggle */
+        .setting-group {
+            background: var(--bg-surface);
+            border-radius: 24px;
+            border: 1px solid var(--border-subtle);
+            margin: 0 24px;
+            overflow: hidden;
+        }
+        .setting-row {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        .setting-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .segmented-control {
+            display: flex;
+            background: var(--bg-surface-raised);
+            border-radius: 12px;
+            padding: 4px;
+            border: 1px solid var(--border-subtle);
+        }
+        .seg-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .seg-btn.active {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Typography utility classes */
+        .text-received { color: var(--color-received); }
+        .text-given { color: var(--color-given); }
+        .text-credit { color: var(--color-credit); }
+
+        /* Report Cards */
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .report-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 24px 20px;
+        }
+        .report-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .report-value {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+        
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="presentation-container">
+        <!-- Presentation Header & Theme Switch -->
+        <div class="presentation-header">
+            <h1>SimpleLedger UI Kit</h1>
+            <p>Industry standard $1000 app aesthetic. Crafted for effortless legibility, extreme minimalism, and elite presentation.</p>
+            
+            <div class="theme-toggle-container">
+                <button class="theme-toggle-btn active" id="btn-dark" onclick="setTheme('dark')"><i class="ph-fill ph-moon"></i> Dark</button>
+                <button class="theme-toggle-btn" id="btn-light" onclick="setTheme('light')"><i class="ph-fill ph-sun"></i> Light</button>
+            </div>
+        </div>
+
+        <script>
+            function setTheme(mode) {
+                document.body.setAttribute('data-theme', mode);
+                if (mode === 'dark') {
+                    document.getElementById('btn-dark').classList.add('active');
+                    document.getElementById('btn-light').classList.remove('active');
+                } else {
+                    document.getElementById('btn-light').classList.add('active');
+                    document.getElementById('btn-dark').classList.remove('active');
+                }
+            }
+        </script>
+
+
+        <div class="grid">
+
+
+            <!-- Journey Step 1 -->
+            <!-- 19. WelcomeOnboardingScreen -->
+            <div class="screen-container">
+                <div class="screen-title">19 / Welcome (Onboarding)</div>
+                <div class="screen" style="background: var(--brand-primary); color: white;">
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 32px; text-align: center;">
+                        <div style="width: 80px; height: 80px; background: white; border-radius: 24px; color: var(--brand-primary); display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 32px; box-shadow: 0 16px 32px rgba(0,0,0,0.2);">
+                            <i class="ph-bold ph-book-bookmark"></i>
+                        </div>
+                        <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.1;">Your Khata, <br>Your Control.</h1>
+                        <p style="font-size: 16px; font-weight: 500; opacity: 0.9; margin-bottom: 48px; line-height: 1.5;">SimpleLedger works entirely on your phone. No internet required. Your business data is never sent to any server.</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; text-align: left; background: rgba(255,255,255,0.1); padding: 24px; border-radius: 20px;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <i class="ph-fill ph-rocket bg-surface text-primary" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 6px;"></i>
+                                <span style="font-size: 14px; font-weight: 600;">3x Faster Entry</span>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <i class="ph-fill ph-wifi-slash bg-surface text-primary" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 6px;"></i>
+                                <span style="font-size: 14px; font-weight: 600;">100% Offline App</span>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <i class="ph-fill ph-shield-check bg-surface text-primary" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 6px;"></i>
+                                <span style="font-size: 14px; font-weight: 600;">Secure PIN Lock</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 24px;">
+                        <button class="btn btn-full" style="background: white; color: var(--brand-primary); height: 56px; border-radius: 16px; font-size: 16px; font-weight: 800;">Get Started</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 2 -->
+            <!-- 20. ShopSetupScreen -->
+            <div class="screen-container">
+                <div class="screen-title">20 / Create Shop Setup</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Setup Your Shop</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.5;">
+                            Tell us about your business. This information will appear on the WhatsApp receipts you send to customers.
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 24px;">
+                            <i class="ph-fill ph-storefront input-icon"></i>
+                            <input type="text" class="giant-input" placeholder="Shop / Business Name">
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 24px;">
+                            <i class="ph-fill ph-user input-icon"></i>
+                            <input type="text" class="giant-input" placeholder="Owner Name (Your Name)">
+                        </div>
+                        
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Currency Symbol</div>
+                        <div class="pill-scroll" style="padding: 0; background: transparent;">
+                            <div class="pill active" style="background: var(--brand-primary); color: #FFF; border-color: var(--brand-primary); font-size: 16px; width: 56px; height: 48px; justify-content: center;">₹</div>
+                            <div class="pill" style="font-size: 16px; width: 56px; height: 48px; justify-content: center;">$</div>
+                            <div class="pill" style="font-size: 16px; width: 56px; height: 48px; justify-content: center;">€</div>
+                            <div class="pill" style="font-size: 16px; width: 56px; height: 48px; justify-content: center;">£</div>
+                        </div>
+
+                    </div>
+                    
+                    <div style="padding: 24px; background: var(--bg-surface);">
+                        <button class="btn btn-full bg-action" style="height: 56px; border-radius: 16px; font-size: 16px;">Next Step</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 3 -->
+            <!-- 21. CreatePINScreen -->
+            <div class="screen-container">
+                <div class="screen-title">21 / Setup App PIN</div>
+                <div class="screen" style="background: var(--bg-base);">
+                    <div class="top-bar" style="background: transparent;">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 16px; color: var(--text-secondary); font-weight: 600;">Security Setup</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px 24px 100px 24px;">
+                        
+                        <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--bg-surface); border: 1px dashed var(--border-strong); color: var(--brand-primary); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px;">
+                            <i class="ph-bold ph-password"></i>
+                        </div>
+                        
+                        <div style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px;">Create a 4-digit PIN</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 48px; font-weight: 500;">This prevents unauthorized access to your shop's ledger.</div>
+                        
+                        <!-- Empty PIN indicator dots for 'Creation' Mode -->
+                        <div style="display: flex; gap: 16px;">
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Lock Minimalist Numpad -->
+                    <div class="numpad" style="padding-bottom: 40px; background: transparent;">
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">1</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">2</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">3</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">4</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">5</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">6</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">7</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">8</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">9</button>
+                        <button style="background: transparent;"></button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">0</button><button style="background: transparent; font-size: 28px; color: var(--text-secondary);"><i class="ph-bold ph-backspace"></i></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 4 -->
+            <!-- 22. OpeningBalanceScreen (PRD §4.1 - First Launch) -->
+            <div class="screen-container">
+                <div class="screen-title">22 / Opening Balance (First Launch)</div>
+                <div class="screen">
+                    <div class="top-bar" style="background: transparent;">
+                        <button class="top-bar-btn"></button>
+                        <div class="top-bar-title" style="font-size: 16px; color: var(--text-secondary); font-weight: 600;">Step 2 of 2</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px 24px 0 24px;">
+                        
+                        <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--color-received); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.08);">
+                            <i class="ph-bold ph-wallet"></i>
+                        </div>
+                        
+                        <div style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center;">How much cash do you have right now?</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 40px; font-weight: 500; line-height: 1.5;">This sets your starting cash balance.<br>You can skip if you're unsure.</div>
+                        
+                        <!-- Amount Display -->
+                        <div style="font-size: 64px; font-weight: 800; letter-spacing: -2px; color: var(--text-primary); display: flex; align-items: center; justify-content: center; line-height: 1; margin-bottom: 16px;">
+                            <span style="font-size: 32px; color: var(--text-tertiary); margin-right: 8px; margin-top: -8px;">₹</span>
+                            5,000
+                        </div>
+                    </div>
+
+                    <!-- Numpad -->
+                    <div class="numpad" style="padding-bottom: 16px;">
+                        <button>1</button><button>2</button><button>3</button>
+                        <button>4</button><button>5</button><button>6</button>
+                        <button>7</button><button>8</button><button>9</button>
+                        <button style="font-size: 24px;">.</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
+                    </div>
+                    
+                    <div style="padding: 0 24px 32px 24px; display: flex; gap: 12px;">
+                        <button class="btn" style="flex: 1; height: 56px; border-radius: 16px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 15px; font-weight: 700;">Skip — Start at ₹0</button>
+                        <button class="btn bg-received" style="flex: 1; height: 56px; border-radius: 16px; font-size: 15px;"><i class="ph-bold ph-check"></i> Set Starting Cash</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 5 -->
+            <!-- 15. AppLockScreen -->
+            <div class="screen-container">
+                <div class="screen-title">15 / App Lock (Privacy)</div>
+                <div class="screen" style="background: var(--bg-base);">
+                    <div class="top-bar" style="background: transparent;">
+                        <button class="top-bar-btn"></button>
+                        <div class="top-bar-title" style="font-size: 16px; color: var(--text-secondary); font-weight: 600;">SimpleLedger</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px 24px 120px 24px;">
+                        
+                        <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--brand-primary); display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.08);">
+                            <i class="ph-bold ph-lock-key"></i>
+                        </div>
+                        
+                        <div style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px;">Enter your PIN</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center; margin-bottom: 48px; font-weight: 500;">Keep your business data private</div>
+                        
+                        <!-- Premium PIN indicator dots -->
+                        <div style="display: flex; gap: 16px;">
+                            <div style="width: 16px; height: 16px; border-radius: 50%; background: var(--brand-primary); box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; background: var(--text-primary);"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                            <div style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent;"></div>
+                        </div>
+                        <div style="margin-top: 32px; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer;">Forgot PIN?</div>
+                    </div>
+
+                    <!-- Lock Minimalist Numpad -->
+                    <div class="numpad" style="padding-bottom: 40px; background: transparent;">
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">1</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">2</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">3</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">4</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">5</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">6</button>
+                        <button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">7</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">8</button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">9</button>
+                        <button style="background: transparent;"></button><button style="background: transparent; font-weight: 500; font-size: 32px; color: var(--text-primary);">0</button><button style="background: transparent; font-size: 28px; color: var(--text-secondary);"><i class="ph-bold ph-backspace"></i></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 6 -->
+            <!-- 1. HomeEntryScreen -->
+            <div class="screen-container">
+                <div class="screen-title">01 / Home Dashboard</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-list"></i></button>
+                        <div class="top-bar-title">Ledger</div>
+                        <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
+                    </div>
+                    
+                    <div class="balance-summary">
+                        <div class="balance-card">
+                            <span class="balance-label">Cash In</span>
+                            <span class="balance-val text-received">₹ 15,000</span>
+                        </div>
+                        <div class="balance-card">
+                            <span class="balance-label">Cash Out</span>
+                            <span class="balance-val text-given">₹ 2,000</span>
+                        </div>
+                        <div class="balance-card primary">
+                            <span class="balance-label">Balance</span>
+                            <span class="balance-val">₹ 13,000</span>
+                        </div>
+                    </div>
+
+                    <div class="amount-display-area">
+                        <div class="amount-value text-primary">
+                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
+                            0
+                        </div>
+                        <div style="margin-top: 24px; padding: 10px 20px; border-radius: 100px; background: var(--bg-surface); border: 1px dashed var(--border-strong); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer;">
+                            <i class="ph-bold ph-pencil-simple"></i>
+                            Add Note or Customer (Optional)
+                        </div>
+                    </div>
+
+                    <!-- NEW: Quick Item Price Deck (Phase 6) -->
+                    <div class="scroll-horizontal" style="padding: 0 24px 16px 24px; gap: 12px; margin-top: -8px;">
+                        <button class="pill" style="height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <span style="font-size: 16px;">☕</span> 
+                            <span style="font-weight: 600; font-size: 14px;">Tea</span>
+                            <span style="color: var(--text-secondary); font-size: 13px; font-weight: 700;">₹10</span>
+                        </button>
+                        <button class="pill" style="height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <span style="font-size: 16px;">🥛</span> 
+                            <span style="font-weight: 600; font-size: 14px;">Milk 1L</span>
+                            <span style="color: var(--text-secondary); font-size: 13px; font-weight: 700;">₹66</span>
+                        </button>
+                        <button class="pill" style="height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <span style="font-size: 16px;">🍞</span> 
+                            <span style="font-weight: 600; font-size: 14px;">Bread</span>
+                            <span style="color: var(--text-secondary); font-size: 13px; font-weight: 700;">₹40</span>
+                        </button>
+                        <button class="pill" style="height: 44px; display: inline-flex; align-items: center; justify-content: center; width: 44px; padding: 0; border-radius: 12px; background: var(--bg-surface-raised); border: 1px dashed var(--border-strong); color: var(--text-secondary); flex-shrink: 0;">
+                            <i class="ph-bold ph-plus" style="font-size: 16px;"></i>
+                        </button>
+                    </div>
+
+                    <div class="numpad">
+                        <button>1</button><button>2</button><button>3</button>
+                        <button>4</button><button>5</button><button>6</button>
+                        <button>7</button><button>8</button><button>9</button>
+                        <button style="font-size: 24px;">00</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
+                    </div>
+                    
+                    <div class="action-area">
+                        <div class="action-grid">
+                            <button class="btn bg-received"><i class="ph-bold ph-plus"></i> Sale</button>
+                            <button class="btn bg-given"><i class="ph-bold ph-minus"></i> Expense</button>
+                            <button class="btn bg-credit"><i class="ph-bold ph-handshake"></i> Credit</button>
+                            <button class="btn bg-action"><i class="ph-bold ph-arrow-down-left"></i> Receive</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 7 -->
+            <!-- Home with Undo Banner -->
+            <div class="screen-container">
+                <div class="screen-title">02 / Action State</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-list"></i></button>
+                        <div class="top-bar-title">Ledger</div>
+                        <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
+                    </div>
+                    
+                    <div class="balance-summary">
+                        <div class="balance-card primary" style="align-items: center; justify-content: center; flex-direction: row; gap: 12px;">
+                            <span class="balance-label">Current Balance</span>
+                            <span class="balance-val" style="font-size: 24px;">₹ 13,800</span>
+                        </div>
+                    </div>
+
+                    <div class="amount-display-area">
+                        <div class="amount-value">
+                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
+                            800
+                        </div>
+                        <div style="margin-top: 24px; padding: 10px 20px; border-radius: 100px; background: var(--bg-surface-raised); border: 1px solid var(--brand-primary); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text-primary); cursor: pointer; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);">
+                            <i class="ph-fill ph-user" style="color: var(--brand-primary);"></i>
+                            Ramesh Kumar
+                        </div>
+                    </div>
+                    
+                    <div class="undo-banner">
+                        <span style="display: flex; align-items: center; gap: 12px;">
+                            <i class="ph-fill ph-check-circle text-received" style="font-size: 24px;"></i> 
+                            Saved successfully
+                        </span>
+                        <button class="undo-action">Undo</button>
+                    </div>
+
+                    <div class="numpad">
+                        <button>1</button><button>2</button><button>3</button>
+                        <button>4</button><button>5</button><button>6</button>
+                        <button>7</button><button>8</button><button>9</button>
+                        <button style="font-size: 24px;">00</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
+                    </div>
+                    <div class="action-area">
+                        <div class="action-grid">
+                            <button class="btn bg-received"><i class="ph-bold ph-plus"></i> Sale</button>
+                            <button class="btn bg-given"><i class="ph-bold ph-minus"></i> Expense</button>
+                            <button class="btn bg-credit"><i class="ph-bold ph-handshake"></i> Credit</button>
+                            <button class="btn bg-action"><i class="ph-bold ph-arrow-down-left"></i> Receive</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 8 -->
+            <!-- 24. HomeWithUndoBanner -->
+            <div class="screen-container">
+                <div class="screen-title">24 / Undo Banner (PRD §4.6)</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-list"></i></button>
+                        <div class="top-bar-title">Ledger</div>
+                        <button class="top-bar-btn"><i class="ph ph-bell"></i></button>
+                    </div>
+                    
+                    <div class="balance-summary">
+                        <div class="balance-card">
+                            <span class="balance-label">Cash In</span>
+                            <span class="balance-val text-received">₹ 15,250</span>
+                        </div>
+                        <div class="balance-card">
+                            <span class="balance-label">Cash Out</span>
+                            <span class="balance-val text-given">₹ 2,000</span>
+                        </div>
+                        <div class="balance-card primary">
+                            <span class="balance-label">Balance</span>
+                            <span class="balance-val">₹ 13,250</span>
+                        </div>
+                    </div>
+
+                    <div class="amount-display-area">
+                        <div class="amount-value text-primary">
+                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
+                            0
+                        </div>
+                    </div>
+                    
+                    <!-- PRD §4.6 Undo Banner - cash sale -->
+                    <div class="undo-banner">
+                        <span style="display: flex; align-items: center; gap: 10px; font-size: 14px;">
+                            <i class="ph-fill ph-check-circle text-received" style="font-size: 22px;"></i> 
+                            ✓ ₹250 Cash Sale saved
+                        </span>
+                        <button class="undo-action">UNDO</button>
+                    </div>
+
+                    <div class="numpad">
+                        <button>1</button><button>2</button><button>3</button>
+                        <button>4</button><button>5</button><button>6</button>
+                        <button>7</button><button>8</button><button>9</button>
+                        <button style="font-size: 24px;">00</button><button>0</button><button><i class="ph-fill ph-backspace"></i></button>
+                    </div>
+                    <div class="action-area">
+                        <div class="action-grid">
+                            <button class="btn bg-received"><i class="ph-bold ph-plus"></i> Sale</button>
+                            <button class="btn bg-given"><i class="ph-bold ph-minus"></i> Expense</button>
+                            <button class="btn bg-credit"><i class="ph-bold ph-handshake"></i> Credit</button>
+                            <button class="btn bg-action"><i class="ph-bold ph-arrow-down-left"></i> Receive</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 9 -->
+            <!-- 6. ExpenseScreen -->
+            <div class="screen-container">
+                <div class="screen-title">06 / Record Expense</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-x"></i></button>
+                        <div class="top-bar-title">Add Expense</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div class="pill-scroll" style="margin-top: 16px;">
+                        <div class="pill active">Tea/Snacks</div>
+                        <div class="pill">Transport</div>
+                        <div class="pill">Salary</div>
+                        <div class="pill">Materials</div>
+                    </div>
+
+                    <div class="amount-display-area" style="padding-bottom: 24px;">
+                        <div class="amount-value">
+                            <span class="amount-value-dim" style="font-size: 40px; margin-top: -16px; margin-right: 8px;">₹</span> 
+                            150
+                        </div>
+                    </div>
+
+                    <div class="action-area" style="padding-bottom: 16px;">
+                        <button class="btn btn-full bg-given"><i class="ph-bold ph-minus"></i> Save Expense</button>
+                    </div>
+
+                    <div class="list-container">
+                        <div class="list-header">Recent Expenses</div>
+                        <div class="list-item" style="padding: 16px;">
+                            <div class="item-left">
+                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
+                                <div>
+                                    <div class="item-title" style="margin: 0; font-size: 15px;">Transport</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Today</div>
+                                </div>
+                            </div>
+                            <div class="item-amount text-given">₹ 40</div>
+                        </div>
+                        <div class="list-item" style="padding: 16px;">
+                            <div class="item-left">
+                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given);"><i class="ph-bold ph-receipt"></i></div>
+                                <div>
+                                    <div class="item-title" style="margin: 0; font-size: 15px;">Tea/Snacks</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Yesterday</div>
+                                </div>
+                            </div>
+                            <div class="item-amount text-given">₹ 60</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 9 -->
+            <!-- 23. CreditUdharBottomSheet (PRD §4.4 - Core Transaction Flow) -->
+            <div class="screen-container">
+                <div class="screen-title">23 / Credit (Udhar) Entry</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div class="bottom-sheet" style="height: 85%;">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h2 style="font-size: 22px; font-weight: 700;">Record Udhar</h2>
+                                <div style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">₹ 500 credit to customer</div>
+                            </div>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
+                        </div>
+                        
+                        <!-- Amount Badge -->
+                        <div style="padding: 0 24px 20px 24px;">
+                            <div style="background: var(--color-credit-bg); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <i class="ph-bold ph-handshake" style="color: var(--color-credit); font-size: 20px;"></i>
+                                <span style="font-size: 24px; font-weight: 800; color: var(--color-credit); letter-spacing: -0.5px;">₹ 500</span>
+                            </div>
+                        </div>
+
+                        <div style="padding: 0 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; overflow-y: auto;">
+                            
+                            <!-- Customer Name with Autocomplete -->
+                            <div style="position: relative;">
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Customer Name *</div>
+                                <div class="input-group" style="margin: 0;">
+                                    <i class="ph-fill ph-user input-icon"></i>
+                                    <input type="text" class="giant-input" placeholder="Type customer name..." value="Raj" style="border-color: var(--brand-primary); background: var(--bg-base);">
+                                </div>
+                                
+                                <!-- Autocomplete Dropdown (PRD §4.4 - max 5 suggestions with disambiguators) -->
+                                <div style="position: absolute; top: 100%; left: 0; right: 0; z-index: 200; margin-top: 4px; background: var(--bg-surface-raised); border: 1px solid var(--border-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 32px rgba(0,0,0,0.3);">
+                                    <!-- Suggestion 1 -->
+                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); cursor: pointer;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
+                                            <div>
+                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);"><span style="color: var(--brand-primary);">Raj</span>esh Kumar</div>
+                                                <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-clock" style="font-size: 10px;"></i> Last: 2 days ago</div>
+                                            </div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 14px; font-weight: 700; color: var(--color-given);">₹ 2,500</div>
+                                            <div style="font-size: 11px; color: var(--text-tertiary);">pending</div>
+                                        </div>
+                                    </div>
+                                    <!-- Suggestion 2 -->
+                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); cursor: pointer;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
+                                            <div>
+                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);"><span style="color: var(--brand-primary);">Raj</span>endra Singh</div>
+                                                <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-phone" style="font-size: 10px;"></i> 98765 43210</div>
+                                            </div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 14px; font-weight: 700; color: var(--color-given);">₹ 800</div>
+                                            <div style="font-size: 11px; color: var(--text-tertiary);">pending</div>
+                                        </div>
+                                    </div>
+                                    <!-- Suggestion 3 (Inactive customer - PRD §8.5) -->
+                                    <div style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; opacity: 0.6;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg-surface); color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="ph-fill ph-user"></i></div>
+                                            <div>
+                                                <div style="font-size: 15px; font-weight: 700; color: var(--text-secondary);"><span style="color: var(--brand-primary);">Raj</span> Malhotra <span style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); background: var(--bg-surface); padding: 2px 8px; border-radius: 6px; margin-left: 4px;">(inactive)</span></div>
+                                                <div style="font-size: 12px; color: var(--text-tertiary); display: flex; align-items: center; gap: 6px; margin-top: 2px;"><i class="ph-fill ph-clock" style="font-size: 10px;"></i> Last active: 15 Jan 2026</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Phone Number -->
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Phone (Optional)</div>
+                                <div class="input-group" style="margin: 0;">
+                                    <i class="ph-fill ph-phone input-icon"></i>
+                                    <input type="tel" class="giant-input" placeholder="10-digit mobile number">
+                                </div>
+                            </div>
+                            
+                            <!-- Note -->
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Note (Optional)</div>
+                                <div class="input-group" style="margin: 0;">
+                                    <i class="ph-fill ph-note-pencil input-icon"></i>
+                                    <input type="text" class="giant-input" placeholder="Short note (optional)">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 24px;">
+                            <button class="btn btn-full bg-credit" style="height: 56px; border-radius: 16px; font-size: 16px;"><i class="ph-bold ph-handshake"></i> Save Udhar — ₹ 500</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 10 -->
+            <!-- 8. CreditStatusBottomSheet -->
+            <div class="screen-container">
+                <div class="screen-title">08 / Search Overlay (Drawer)</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div class="bottom-sheet">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <h2 style="font-size: 22px; font-weight: 700;">Pending Credits</h2>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
+                        </div>
+                        
+                        <div class="input-group" style="margin-top: 0;">
+                            <i class="ph ph-magnifying-glass input-icon"></i>
+                            <input type="text" class="giant-input" placeholder="Search pending...">
+                        </div>
+
+                        <div class="list-container" style="background: transparent;">
+                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-user"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Ramesh Kumar</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 12,500</div>
+                            </div>
+                            <div class="list-item" style="border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Suresh Electronics</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 4,300</div>
+                            </div>
+                            <div class="list-item" style="border: none; border-radius: 0; background: transparent; padding: 20px 0;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div class="item-icon" style="color: var(--color-credit); background: var(--color-credit-bg);"><i class="ph-fill ph-storefront"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 18px;">Kiran Store</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Pending Amount</div>
+                                    </div>
+                                </div>
+                                <div class="item-amount text-credit" style="font-size: 18px;">₹ 1,200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 11 -->
+            <!-- 11. AddNoteKeyboardOverlay -->
+            <div class="screen-container">
+                <div class="screen-title">11 / Add Note Keyboard State</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column;">
+                        <!-- Input Bar -->
+                        <div style="background: var(--bg-surface); padding: 12px 16px; border-top: 1px solid var(--border-subtle); display: flex; gap: 12px; align-items: center;">
+                            <i class="ph-bold ph-pencil-simple" style="color: var(--text-tertiary); font-size: 24px;"></i>
+                            <input type="text" placeholder="Type items or note..." value="2 Milk, 1 Bread|" style="flex: 1; height: 40px; background: transparent; border: none; font-size: 16px; color: var(--text-primary); font-family: inherit; outline: none; caret-color: var(--brand-primary);" autofocus>
+                            <button class="btn bg-action" style="height: 40px; padding: 0 16px; border-radius: 100px; font-size: 14px;">Done</button>
+                        </div>
+                        
+                        <!-- Fake Native OS Keyboard area for visual mockup -->
+                        <div style="height: 290px; background: var(--bg-surface-raised); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center;">
+                            <div style="color: var(--text-tertiary); font-size: 14px; font-weight: 500; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <i class="ph-fill ph-keyboard" style="font-size: 32px;"></i>
+                                Native OS Keyboard Slides Up Here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 12 -->
+            <!-- 5. ReceivePaymentScreen -->
+            <div class="screen-container">
+                <div class="screen-title">05 / Receive Payment</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn" style="width: auto; padding-right: 16px;"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Receive Payment</div>
+                        <button class="top-bar-btn" style="width: auto; font-size: 14px; font-weight: 600; color: var(--text-secondary); border-radius: 12px; padding: 0 12px;">Clear</button>
+                    </div>
+                    
+                    <div style="padding: 16px 24px 8px 24px; display: flex; flex-direction: column; flex: 1; overflow-y: hidden;">
+                        <!-- Elevated Top Card -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 16px 24px; border: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div style="flex: 1; border-right: 1px solid var(--border-subtle);">
+                                <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase;">Payer</div>
+                                <div style="font-size: 16px; font-weight: 800; color: var(--text-primary);">Ramesh Kumar</div>
+                            </div>
+                            <div style="flex: 1; text-align: right;">
+                                <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase;">Outstanding</div>
+                                <div style="font-size: 16px; font-weight: 800; color: var(--text-primary);">₹ 12,500.00</div>
+                            </div>
+                        </div>
+
+                        <!-- Amount Readout Area -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="font-size: 64px; font-weight: 800; letter-spacing: -2px; color: var(--text-primary); display: flex; justify-content: center; align-items: center; line-height: 1;">
+                                <span style="font-size: 32px; color: var(--text-tertiary); margin-right: 8px; margin-top: -12px;">₹</span>
+                                2,000.00
+                            </div>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 16px;">
+                                Remaining Balance <span style="font-weight: 800; color: var(--text-primary);">₹ 10,500.00</span>
+                            </div>
+                            <div style="margin-top: 16px; padding: 8px 16px; border-radius: 100px; background: var(--color-credit-bg); border: 1px solid rgba(245, 158, 11, 0.2); display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--color-credit); text-transform: uppercase; letter-spacing: 0.5px;">
+                                <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-credit);"></div>
+                                Partial Payment
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Toggle -->
+                        <div style="margin-bottom: 16px;">
+                            <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; margin-bottom: 16px;">Payment Method</div>
+                            <div class="pill-scroll" style="padding: 0; background: transparent;">
+                                <div class="pill active" style="background: var(--brand-primary); color: #FFF; border-color: var(--brand-primary);">Cash</div>
+                                <div class="pill">UPI</div>
+                                <div class="pill">Bank Transfer</div>
+                                <div class="pill">Check</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Numpad inside its own container -->
+                    <div class="numpad" style="padding-top: 0; padding-bottom: 16px;">
+                        <button style="background: var(--bg-surface-raised);">1</button><button style="background: var(--bg-surface-raised);">2</button><button style="background: var(--bg-surface-raised);">3</button>
+                        <button style="background: var(--bg-surface-raised);">4</button><button style="background: var(--bg-surface-raised);">5</button><button style="background: var(--bg-surface-raised);">6</button>
+                        <button style="background: var(--bg-surface-raised);">7</button><button style="background: var(--bg-surface-raised);">8</button><button style="background: var(--bg-surface-raised);">9</button>
+                        <button style="background: var(--bg-surface-raised); font-size: 24px;">.</button><button style="background: var(--bg-surface-raised);">0</button><button style="background: var(--bg-surface-raised);"><i class="ph-fill ph-backspace"></i></button>
+                    </div>
+                    
+                    <div class="action-area" style="padding-bottom: 24px;">
+                        <button class="btn btn-full bg-action" style="height: 56px; border-radius: 16px;">Confirm Receipt</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 13 -->
+            <!-- 12. PaymentSuccessScreen -->
+            <div class="screen-container">
+                <div class="screen-title">12 / Payment Success & Receipt</div>
+                <div class="screen" style="background: var(--color-received-bg);">
+                    <!-- No top bar, immersive view -->
+                    
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+                        
+                        <!-- Success Animation Icon -->
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--color-received); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 24px; box-shadow: 0 12px 24px rgba(16, 185, 129, 0.3);">
+                            <i class="ph-bold ph-check"></i>
+                        </div>
+                        
+                        <div style="font-size: 24px; font-weight: 800; color: var(--color-received); margin-bottom: 8px; letter-spacing: -0.5px;">Payment Saved!</div>
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 40px;">Ledger updated successfully</div>
+
+                        <!-- Mini Receipt -->
+                        <div style="width: 100%; background: var(--bg-surface); border-radius: 24px; border: 1px solid var(--border-subtle); padding: 24px; display: flex; flex-direction: column; gap: 16px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                            
+                            <div style="text-align: center; border-bottom: 1px dashed var(--border-subtle); padding-bottom: 24px; margin-bottom: 8px;">
+                                <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Amount Received</div>
+                                <div style="font-size: 36px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; display: flex; align-items: center; justify-content: center;"><span style="font-size: 20px; color: var(--text-tertiary); margin-right: 4px;">₹</span> 2,000</div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-size: 13px; color: var(--text-secondary);">From</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Ramesh Kumar</div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-size: 13px; color: var(--text-secondary);">Date/Time</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Today, 10:30 AM</div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-size: 13px; color: var(--text-secondary);">Method</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Cash</div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-size: 13px; color: var(--text-secondary);">Remaining Due</div>
+                                <div style="font-size: 14px; font-weight: 700; color: var(--color-given);">₹ 10,500</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--bg-base);">
+                        <button class="btn btn-full" style="height: 56px; font-size: 16px; background: #25D366; color: #FFF; border-radius: 16px;">
+                            <i class="ph-fill ph-whatsapp-logo" style="font-size: 24px;"></i> Share Receipt
+                        </button>
+                        <button class="btn btn-full bg-surface" style="height: 56px; border-radius: 16px; color: var(--text-primary);">
+                            Back to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 14 -->
+            <!-- 3. CustomerListScreen -->
+            <div class="screen-container">
+                <div class="screen-title">03 / Customer Directory</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-arrow-left"></i></button>
+                        <div class="top-bar-title">Customers</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div class="input-group" style="margin-bottom: 12px;">
+                        <i class="ph ph-magnifying-glass input-icon"></i>
+                        <input type="text" class="giant-input" placeholder="Search customer...">
+                    </div>
+                    
+                    <div style="padding: 0 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+                            <i class="ph-bold ph-sort-descending"></i> Sort: <span style="color: var(--text-primary);">Highest Pending</span>
+                        </div>
+                        <div style="background: var(--bg-surface-raised); padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                            <i class="ph-bold ph-faders"></i> Filter
+                        </div>
+                    </div>
+                    
+                    <!-- Bulk Reminder Action -->
+                    <div style="padding: 0 24px 16px 24px;">
+                        <button class="btn btn-full" style="height: 48px; border-radius: 12px; background: rgba(37, 211, 102, 0.1); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.2); font-size: 14px; font-weight: 700;">
+                            <i class="ph-fill ph-whatsapp-logo" style="font-size: 18px;"></i> Send Reminders to High Risk (3)
+                        </button>
+                    </div>
+                    
+                    <div class="list-container" style="padding-top: 8px;">
+                        <div class="list-item" style="flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; width: 100%;">
+                                <div class="item-left">
+                                    <div class="item-icon" style="color: var(--brand-primary);"><i class="ph-fill ph-user"></i></div>
+                                    <div>
+                                        <div class="item-title">Ramesh Kumar</div>
+                                        <div class="item-subtitle" style="margin-bottom: 4px;"><i class="ph-fill ph-phone" style="color: var(--text-tertiary);"></i> +91 98765 43210</div>
+                                        <div class="item-subtitle"><i class="ph-fill ph-clock text-tertiary"></i> Active 2d ago</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="item-amount text-credit">₹ 12,500</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-full bg-surface" style="height: 48px; font-size: 14px; border-color: var(--color-credit); color: var(--color-credit);">
+                                <i class="ph-bold ph-download-simple"></i> Quick Receive
+                            </button>
+                        </div>
+
+                        <div class="list-item" style="flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; width: 100%;">
+                                <div class="item-left">
+                                    <div class="item-icon"><i class="ph-fill ph-storefront"></i></div>
+                                    <div>
+                                        <div class="item-title">Suresh Electronics</div>
+                                        <div class="item-subtitle"><i class="ph-fill ph-clock text-tertiary"></i> Today</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="item-amount text-credit">₹ 4,300</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-full bg-surface" style="height: 48px; font-size: 14px;">
+                                <i class="ph-bold ph-download-simple"></i> Quick Receive
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 15 -->
+            <!-- 10. AddNewCustomerDrawer -->
+            <div class="screen-container">
+                <div class="screen-title">10 / Add New Customer (Drawer)</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div class="bottom-sheet" style="height: auto; padding-bottom: 32px;">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 24px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <h2 style="font-size: 22px; font-weight: 700;">New Customer</h2>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
+                        </div>
+                        
+                        <div style="padding: 0 24px; display: flex; flex-direction: column; gap: 16px;">
+                            <div class="input-group" style="margin: 0;">
+                                <i class="ph-fill ph-user input-icon"></i>
+                                <input type="text" class="giant-input" placeholder="Customer Name (Required)">
+                            </div>
+                            
+                            <div class="input-group" style="margin: 0;">
+                                <i class="ph-fill ph-phone input-icon"></i>
+                                <input type="tel" class="giant-input" placeholder="Phone Number (Optional)">
+                            </div>
+
+                            <div class="input-group" style="margin: 0;">
+                                <i class="ph-fill ph-coins input-icon"></i>
+                                <input type="number" class="giant-input" placeholder="Opening Balance (Optional)">
+                            </div>
+                            
+                            <div style="margin-top: 8px; display: flex; gap: 12px;">
+                                <button class="btn btn-full" style="background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); color: var(--text-primary); height: 56px; border-radius: 16px;">Cancel</button>
+                                <button class="btn btn-full bg-action" style="height: 56px; border-radius: 16px;">Save Customer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 16 -->
+            <!-- 4. CustomerDetailScreen -->
+            <div class="screen-container">
+                <div class="screen-title">04 / Customer Profile</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="flex-direction: column; gap: 2px;">
+                            <span style="font-size: 16px; line-height: 1;">Ramesh Kumar</span>
+                            <span style="font-size: 12px; font-weight: 500; color: var(--text-secondary); line-height: 1; display: flex; align-items: center; gap: 4px;"><i class="ph-fill ph-phone"></i>+91 98765 43210</span>
+                        </div>
+                        <button class="top-bar-btn"><i class="ph-bold ph-pencil-simple"></i></button>
+                    </div>
+                    
+                    <div style="padding: 24px 24px 0 24px; display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Elevated Status Card -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 24px; text-align: center; border: 1px solid var(--border-subtle);">
+                            <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">Outstanding Balance</div>
+                            <div style="font-size: 40px; font-weight: 800; color: var(--color-given); letter-spacing: -1px; margin-bottom: 8px;">₹ 12,500</div>
+                            
+                            <!-- Trust Score Badge -->
+                            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); font-size: 12px; font-weight: 700; color: var(--color-given); margin-bottom: 24px;">
+                                <i class="ph-fill ph-warning-circle"></i> High Risk Payer
+                            </div>
+                            
+                            <!-- WhatsApp & Call Buttons (NEW) -->
+                            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                                <button class="btn" style="flex: 1; height: 44px; font-size: 14px; background: rgba(37, 211, 102, 0.1); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.2); border-radius: 12px;">
+                                    <i class="ph-fill ph-whatsapp-logo" style="font-size: 18px;"></i> Reminder
+                                </button>
+                                <button class="btn" style="flex: 1; height: 44px; font-size: 14px; background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 12px;">
+                                    <i class="ph-fill ph-phone-call" style="font-size: 18px;"></i> Call
+                                </button>
+                            </div>
+
+                            <div style="height: 1px; background: var(--border-subtle); margin-bottom: 16px;"></div>
+                            
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="flex: 1; border-right: 1px solid var(--border-subtle);">
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase;">Total Billed</div>
+                                    <div style="font-size: 16px; font-weight: 800; color: var(--text-primary);">₹ 45,000</div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase;">Total Paid</div>
+                                    <div style="font-size: 16px; font-weight: 800; color: var(--color-received);">₹ 32,500</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <button class="btn btn-full bg-action" style="height: 56px; gap: 12px; border-radius: 12px;">
+                            <i class="ph-fill ph-hand-coins" style="font-size: 20px;"></i>
+                            Receive Payment
+                        </button>
+                        <button class="btn btn-full" style="height: 56px; background: transparent; border: 1px solid var(--color-given); color: var(--color-given); border-radius: 12px; gap: 12px;">
+                            <i class="ph-bold ph-plus" style="font-size: 16px;"></i>
+                            Add Expense/Sale
+                        </button>
+                    </div>
+
+                    <div class="list-container" style="padding-top: 24px; gap: 0;">
+                        <div class="list-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: none; padding-bottom: 16px; padding-top: 0;">
+                            <span style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">HISTORY</span>
+                            <span style="font-size: 14px; font-weight: 600; color: var(--brand-primary); text-transform: none; cursor: pointer;">View All</span>
+                        </div>
+                        
+                        <div class="list-item" style="padding: 16px 0; border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent;">
+                            <div class="item-left" style="gap: 16px;">
+                                <div class="item-icon" style="background: var(--color-received-bg); color: var(--color-received); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="ph-bold ph-arrow-down" style="font-size: 20px;"></i></div>
+                                <div>
+                                    <div class="item-title" style="font-size: 15px; font-weight: 700;">Payment Received</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Today</div>
+                                </div>
+                            </div>
+                            <div class="item-amount" style="color: var(--color-received); font-size: 15px; font-weight: 700;">+ ₹ 1,000</div>
+                        </div>
+                        
+                        <div class="list-item" style="padding: 16px 0; border: none; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent;">
+                            <div class="item-left" style="gap: 16px;">
+                                <div class="item-icon" style="background: var(--color-given-bg); color: var(--color-given); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="ph-bold ph-arrow-up" style="font-size: 20px;"></i></div>
+                                <div>
+                                    <div class="item-title" style="font-size: 15px; font-weight: 700;">Invoice #005</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Yesterday</div>
+                                </div>
+                            </div>
+                            <div class="item-amount" style="color: var(--color-given); font-size: 15px; font-weight: 700;">- ₹ 2,500</div>
+                        </div>
+
+                        <div class="list-item" style="padding: 16px 0; border: none; border-radius: 0; background: transparent;">
+                            <div class="item-left" style="gap: 16px;">
+                                <div class="item-icon" style="background: var(--color-received-bg); color: var(--color-received); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="ph-bold ph-arrow-down" style="font-size: 20px;"></i></div>
+                                <div>
+                                    <div class="item-title" style="font-size: 15px; font-weight: 700;">Partial Payment</div>
+                                    <div class="item-subtitle" style="font-size: 13px; color: var(--text-secondary);">Oct 24</div>
+                                </div>
+                            </div>
+                            <div class="item-amount" style="color: var(--color-received); font-size: 15px; font-weight: 700;">+ ₹ 5,000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 17 -->
+            <!-- 13. TransactionDetailModal -->
+            <div class="screen-container">
+                <div class="screen-title">13 / Transaction Detail & Edit</div>
+                <div class="screen" style="background: rgba(0,0,0,0.6);">
+                    <div class="top-bar" style="background: transparent;"></div>
+                    
+                    <div class="bottom-sheet" style="height: auto; padding-bottom: 32px;">
+                        <div class="sheet-handle"></div>
+                        <div style="padding: 0 24px 24px 24px; display: flex; justify-content: space-between; align-items: center;">
+                            <h2 style="font-size: 20px; font-weight: 700;">Transaction Details</h2>
+                            <button class="top-bar-btn" style="width: 32px; height: 32px;"><i class="ph ph-x"></i></button>
+                        </div>
+                        
+                        <div style="padding: 0 24px; display: flex; flex-direction: column; gap: 24px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 40px; font-weight: 800; color: var(--color-given); letter-spacing: -1px; margin-bottom: 8px;"><span style="font-size: 24px; margin-right: 4px;">- ₹</span>2,500</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--color-given); background: var(--color-given-bg); padding: 4px 12px; border-radius: 100px; display: inline-flex; align-items: center; gap: 6px;">
+                                    <i class="ph-bold ph-arrow-up"></i> Expense / Given
+                                </div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-raised); border-radius: 16px; border: 1px solid var(--border-subtle); padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="font-size: 14px; color: var(--text-secondary);">Date & Time</span>
+                                    <span style="font-size: 14px; font-weight: 600;">23 Oct 2023, 02:15 PM</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="font-size: 14px; color: var(--text-secondary);">Customer</span>
+                                    <span style="font-size: 14px; font-weight: 600;">Ramesh Kumar</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="font-size: 14px; color: var(--text-secondary);">Note</span>
+                                    <span style="font-size: 14px; font-weight: 600;">Invoice #005 (Groceries)</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <button class="btn btn-full bg-surface" style="height: 56px; border-radius: 16px; font-size: 15px; color: var(--text-primary); border-color: var(--border-strong);">
+                                    <i class="ph-bold ph-pencil-simple" style="font-size: 20px;"></i> Edit Amount or Note
+                                </button>
+                                <button class="btn btn-full" style="height: 56px; border-radius: 16px; font-size: 15px; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border: 1px solid rgba(239, 68, 68, 0.2);">
+                                    <i class="ph-bold ph-trash" style="font-size: 20px;"></i> Delete Transaction
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 18 -->
+            <!-- 7. ReportScreen -->
+            <div class="screen-container">
+                <div class="screen-title">07 / Reports Dashboard</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-arrow-left"></i></button>
+                        <div class="top-bar-title">Reports</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px;">
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; margin-bottom: 24px; cursor: pointer;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--brand-primary); color: white; display: flex; align-items: center; justify-content: center;">
+                                    <i class="ph-bold ph-calendar-blank" style="font-size: 18px;"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Date Range</div>
+                                    <div style="font-weight: 700; font-size: 15px;">Today</div>
+                                </div>
+                            </div>
+                            <i class="ph-bold ph-caret-down text-tertiary" style="font-size: 18px;"></i>
+                        </div>
+                        
+                        <div class="report-grid">
+                            <div class="report-card">
+                                <div class="report-label">Total Sale</div>
+                                <div class="report-value text-received">₹ 14,500</div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-label">Total Expense</div>
+                                <div class="report-value text-given">₹ 2,100</div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-label">Credit Given</div>
+                                <div class="report-value text-credit">₹ 4,300</div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-label">Credit Received</div>
+                                <div class="report-value">₹ 1,500</div>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card" style="text-align: center; padding: 32px 24px; border-color: var(--brand-primary); background: var(--bg-surface-raised);">
+                            <div class="report-label" style="margin-bottom: 12px; color: var(--brand-primary);">EXPECTED CASH IN HAND</div>
+                            <div style="font-size: 40px; font-weight: 800; letter-spacing: -1px;">₹ 13,900</div>
+                        </div>
+
+                        <!-- NEW (Phase 7): High Risk Customers -->
+                        <div style="margin-top: 32px;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">Risky Customers (Over 30 days)</div>
+                            <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 12px;">
+                                <div class="list-item" style="padding: 16px; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.02); border-radius: 16px;">
+                                    <div class="item-left" style="gap: 12px;">
+                                        <div class="item-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--color-given); width: 44px; height: 44px;"><i class="ph-fill ph-user"></i></div>
+                                        <div>
+                                            <div class="item-title" style="margin: 0; font-size: 15px;">Ramesh Kumar</div>
+                                            <div class="item-subtitle" style="font-size: 12px; color: var(--color-given); margin-top: 2px;"><i class="ph-bold ph-warning-circle"></i> Due for 45 days</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-amount text-given" style="font-size: 16px;">₹ 12,500</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 19 -->
+            <!-- 14. CashDrawerReconcilerScreen -->
+            <div class="screen-container">
+                <div class="screen-title">14 / Cash Drawer (Galla) Check</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">End of Day Tally</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        
+                        <!-- System Calculation -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 24px; border: 1px solid var(--border-subtle); text-align: center; margin-bottom: 32px;">
+                            <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Expected Cash In Drawer</div>
+                            <div style="font-size: 44px; font-weight: 800; color: var(--brand-primary); letter-spacing: -1px; margin-bottom: 16px;">₹ 13,900</div>
+                            <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-tertiary);">
+                                <i class="ph-fill ph-info"></i> Based on today's entries
+                            </div>
+                        </div>
+
+                        <!-- Physical Count Input -->
+                        <div style="font-size: 14px; font-weight: 700; margin-bottom: 16px;">Enter Physical Cash Count:</div>
+                        <div class="input-group" style="margin: 0 0 24px 0;">
+                            <span style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 24px; font-weight: 800; color: var(--text-secondary);">₹</span>
+                            <input type="number" class="giant-input" placeholder="0" value="13900" style="padding-left: 48px; font-size: 24px; font-weight: 700; text-align: right; padding-right: 20px;">
+                        </div>
+
+                        <!-- Result Card (MATCH) -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-received); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                <i class="ph-bold ph-check"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 16px; font-weight: 700; color: var(--color-received); margin-bottom: 4px;">Cash Matches Perfectly</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Your drawer is balanced for today.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alternative Result Card (SHORT - Hidden by default in this mockup but showing design) -->
+                         <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; margin-top: 16px; opacity: 0.4;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-given); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                <i class="ph-bold ph-warning"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; font-weight: 700; color: var(--color-given); margin-bottom: 4px;">Short by ₹ 50</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Physical cash is missing.</div>
+                            </div>
+                            <button class="btn" style="height: 32px; padding: 0 12px; font-size: 12px; background: transparent; border: 1px solid var(--color-given); color: var(--color-given); border-radius: 8px;">Adjust</button>
+                        </div>
+
+                    </div>
+                    
+                    <div style="padding: 24px; background: var(--bg-surface);">
+                        <button class="btn btn-full bg-action" style="height: 56px; border-radius: 16px; font-size: 16px; letter-spacing: 0;">Complete Day</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 20 -->
+            <!-- 9. SettingsScreen -->
+            <div class="screen-container">
+                <div class="screen-title">09 / Settings Menu</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph ph-arrow-left"></i></button>
+                        <div class="top-bar-title">Settings</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px 0;">
+                        
+                        <!-- Shop Profile Section -->
+                        <div style="padding: 0 24px; margin-bottom: 32px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
+                            <div style="width: 64px; height: 64px; border-radius: 20px; background: var(--brand-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; flex-shrink: 0; box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);">S</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                    Suresh Provision Store <i class="ph-bold ph-pencil-simple text-tertiary" style="font-size: 16px;"></i>
+                                </div>
+                                <div style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Owner: Suresh Kumar</div>
+                            </div>
+                        </div>
+
+                        <div class="setting-group" style="margin-bottom: 24px;">
+                            <div class="setting-row">
+                                <div class="setting-title">Appearance</div>
+                                <div class="segmented-control">
+                                    <button class="seg-btn">Light</button>
+                                    <button class="seg-btn active">Dark</button>
+                                    <button class="seg-btn">Auto</button>
+                                </div>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-title">Closing Time</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Resets daily summary</div>
+                                </div>
+                                <div style="font-weight: 700; color: var(--brand-primary); font-size: 16px;">12:00 AM</div>
+                            </div>
+                        </div>
+
+                        <!-- Automation Section -->
+                        <div class="setting-group" style="margin-bottom: 24px;">
+                            <div class="setting-row" style="align-items: center; justify-content: space-between;">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <i class="ph-fill ph-whatsapp-logo" style="font-size: 24px; color: #25D366;"></i>
+                                    <div>
+                                        <div class="setting-title">Auto-WhatsApp Receipt</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Send msg right after transaction</div>
+                                    </div>
+                                </div>
+                                <!-- CSS Toggle Switch -->
+                                <div style="width: 44px; height: 24px; background: var(--brand-primary); border-radius: 100px; position: relative; cursor: pointer;">
+                                    <div style="width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 2px; top: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <div class="setting-row" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+                                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                    <i class="ph-fill ph-warning-circle text-warning" style="font-size: 24px;"></i>
+                                    <div>
+                                        <div class="setting-title" style="color: var(--color-warning);">Data Backup</div>
+                                        <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">
+                                            Data is stored only on this phone. Export backup regularly to avoid losing ledger history.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 12px; width: 100%; margin-top: 8px;">
+                                    <button class="btn bg-surface" style="flex: 1;"><i class="ph-bold ph-upload-simple"></i> Export</button>
+                                    <button class="btn bg-surface" style="flex: 1;"><i class="ph-bold ph-download-simple"></i> Restore</button>
+                                </div>
+                                <div style="width: 100%; height: 1px; background: var(--border-subtle); margin: 8px 0;"></div>
+                                <!-- Phase 10: Direct Device Sync -->
+                                <button class="btn btn-full" style="height: 48px; border-radius: 12px; font-weight: 700; background: rgba(99, 102, 241, 0.1); color: var(--brand-primary); border: 1px solid rgba(99, 102, 241, 0.2); justify-content: center;">
+                                    <i class="ph-bold ph-qr-code" style="font-size: 18px;"></i> Sync with another Phone / PC
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 21 -->
+            <!-- 16. ManageQuickItemsScreen -->
+            <div class="screen-container">
+                <div class="screen-title">16 / Manage Quick Items (Price Deck)</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Quick Setup</div>
+                        <button class="top-bar-btn"><i class="ph-bold ph-plus"></i></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
+                            These items appear above your numpad. Tap them while billing to instantly add their price and note.
+                        </div>
+
+                        <!-- Add New Item Inline Form -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 16px; border: 1px solid var(--brand-primary); margin-bottom: 32px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Add New Fast Item</div>
+                            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                                <div class="input-group" style="margin: 0; width: 64px; flex-shrink: 0;">
+                                    <input type="text" class="giant-input" placeholder="🚭" value="☕" style="padding: 0; text-align: center; font-size: 24px;">
+                                </div>
+                                <div class="input-group" style="margin: 0; flex: 1;">
+                                    <input type="text" class="giant-input" placeholder="Item Name" value="Special Tea" style="padding: 0 16px; font-size: 15px;">
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <div class="input-group" style="margin: 0; flex: 1;">
+                                    <i class="ph-bold ph-coins input-icon" style="left: 16px; font-size: 18px;"></i>
+                                    <input type="number" class="giant-input" placeholder="Fixed Price" value="15" style="padding-left: 44px; font-size: 15px; font-weight: 700;">
+                                </div>
+                                <button class="btn bg-action" style="height: 56px; padding: 0 24px; border-radius: 16px; font-size: 15px;">Save</button>
+                            </div>
+                        </div>
+
+                        <!-- Existing Items List -->
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">Active Items on Home Screen</div>
+                        
+                        <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 16px;">
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">☕</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Tea</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 10</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🥛</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Milk 1L</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 66</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="list-item" style="padding: 12px 16px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 20px;">🍞</div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Bread</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div class="item-amount text-primary" style="font-size: 16px;">₹ 40</div>
+                                    <button class="btn" style="width: 36px; height: 36px; padding: 0; background: rgba(239, 68, 68, 0.1); color: var(--color-given); border-radius: 10px; border: none;">
+                                        <i class="ph-bold ph-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 22 -->
+            <!-- 26. EditCategoriesScreen (PRD §4.3 - More → Edit Categories) -->
+            <div class="screen-container">
+                <div class="screen-title">26 / Edit Expense Categories</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Expense Categories</div>
+                        <button class="top-bar-btn"><i class="ph-bold ph-plus"></i></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1; overflow-y: auto;">
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
+                            Manage your expense categories. Tap to rename, drag to reorder. Max 15 categories.
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Active Categories</div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--brand-primary);">6 / 15</div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                            <div class="input-group" style="margin: 0; flex: 1;">
+                                <i class="ph-bold ph-tag input-icon" style="font-size: 18px;"></i>
+                                <input type="text" class="giant-input" placeholder="New category name" style="font-size: 15px;">
+                            </div>
+                            <button class="btn bg-action" style="height: 56px; padding: 0 24px; border-radius: 16px; font-size: 15px;">Add</button>
+                        </div>
+                        
+                        <div class="list-container" style="padding: 0; background: transparent; overflow: visible; gap: 12px;">
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-coffee"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Chai/Snacks</div>
+                                        <div class="item-subtitle" style="font-size: 12px;">32 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-car"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Transport</div>
+                                        <div class="item-subtitle" style="font-size: 12px;">18 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-house-line"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Rent</div>
+                                        <div class="item-subtitle" style="font-size: 12px;">6 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-package"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Supplier Payment</div>
+                                        <div class="item-subtitle" style="font-size: 12px;">45 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-users"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px;">Staff Salary</div>
+                                        <div class="item-subtitle" style="font-size: 12px;">12 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Hidden category -->
+                            <div class="list-item" style="padding: 16px 20px; border-radius: 16px; opacity: 0.5;">
+                                <div class="item-left" style="gap: 16px;">
+                                    <i class="ph-bold ph-dots-six-vertical" style="color: var(--text-tertiary); font-size: 20px; cursor: grab;"></i>
+                                    <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--bg-surface-raised); color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ph-bold ph-dots-three"></i></div>
+                                    <div>
+                                        <div class="item-title" style="margin: 0; font-size: 16px; color: var(--text-secondary);">Other <span style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); background: var(--bg-surface-raised); padding: 2px 8px; border-radius: 6px; margin-left: 4px;">hidden</span></div>
+                                        <div class="item-subtitle" style="font-size: 12px;">2 expenses</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <button style="background: transparent; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-pencil-simple"></i></button>
+                                    <button style="background: transparent; border: none; color: var(--brand-primary); font-size: 20px; cursor: pointer;"><i class="ph-bold ph-eye-slash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 23 -->
+            <!-- 17. KhataTransferScreen -->
+            <div class="screen-container">
+                <div class="screen-title">17 / Transfer Balance (Split Bill)</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Transfer Balance</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
+                            Move pending credit from one customer's khata to another.
+                        </div>
+
+                        <!-- From Customer -->
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Transfer From</div>
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-given-bg); color: var(--color-given); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                        <i class="ph-fill ph-user"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 600; color: var(--text-primary);">Ramesh Kumar</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Balance: <span style="color: var(--color-given); font-weight: 600;">₹ 12,500</span></div>
+                                    </div>
+                                </div>
+                                <i class="ph-bold ph-caret-right text-tertiary"></i>
+                            </div>
+                        </div>
+
+                        <!-- Transfer Icon -->
+                        <div style="text-align: center; margin-bottom: 24px; color: var(--brand-primary); opacity: 0.8;">
+                            <i class="ph-bold ph-arrow-circle-down" style="font-size: 32px;"></i>
+                        </div>
+
+                        <!-- To Customer -->
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Transfer To</div>
+                            <div style="background: var(--bg-surface); border: 1px dashed var(--border-strong); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface-raised); color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                    <i class="ph-bold ph-plus"></i>
+                                </div>
+                                <div style="font-size: 15px; font-weight: 600; color: var(--brand-primary);">Select Customer</div>
+                            </div>
+                        </div>
+
+                        <!-- Amount -->
+                        <div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Transfer Amount</div>
+                            <div class="input-group" style="margin: 0;">
+                                <span style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 800; color: var(--text-secondary);">₹</span>
+                                <input type="number" class="giant-input" placeholder="0" style="padding-left: 48px; font-size: 20px; font-weight: 700;">
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div style="padding: 24px; background: var(--bg-surface);">
+                        <button class="btn btn-full bg-action" style="height: 56px; border-radius: 16px; font-size: 16px;">Complete Transfer</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 24 -->
+            <!-- 18. LocalSyncScreen -->
+            <div class="screen-container">
+                <div class="screen-title">18 / Offline Device Sync (Phase 10)</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Direct Sync (No Internet)</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
+                        <div style="background: var(--bg-surface-raised); border-radius: 16px; padding: 16px; border: 1px dashed var(--brand-primary); margin-bottom: 32px; display: flex; gap: 12px; align-items: flex-start;">
+                            <i class="ph-fill ph-wifi-high" style="color: var(--brand-primary); font-size: 24px;"></i>
+                            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                Send your complete ledger directly to another phone or computer. <strong style="color: var(--text-primary);">Both devices must be on the same WiFi network or Hotspot. No internet required.</strong>
+                            </div>
+                        </div>
+
+                        <!-- Segmented Control for Sync Direction -->
+                        <div class="segmented-control" style="margin-bottom: 32px; height: 48px;">
+                            <button class="seg-btn active" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-qr-code text-primary"></i> Share Data</button>
+                            <button class="seg-btn" style="flex: 1; font-weight: 700;"><i class="ph-bold ph-scan text-secondary"></i> Receive (Scan)</button>
+                        </div>
+
+                        <!-- Share View (QR Code) -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                            <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">Scan with receiving device</div>
+                            
+                            <div style="width: 240px; height: 240px; background: white; border-radius: 20px; padding: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 16px 32px rgba(0,0,0,0.1);">
+                                <!-- Mockup of a QR Code -->
+                                <div style="width: 100%; height: 100%; border: 4px solid black; position: relative;">
+                                    <div style="position: absolute; top: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; top: 10%; right: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; bottom: 10%; left: 10%; width: 20%; height: 20%; background: black;"></div>
+                                    <div style="position: absolute; top: 40%; left: 40%; right: 10%; bottom: 10%; background: repeating-linear-gradient(45deg, black, black 10px, white 10px, white 20px);"></div>
+                                    <div style="position: absolute; top: 20px; left: 40%; width: 20%; height: 20%; background: black;"></div>
+                                </div>
+                            </div>
+                            
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Or open this address on the other device:</div>
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 24px; border-radius: 12px; font-family: monospace; font-size: 18px; font-weight: 700; color: var(--brand-primary); user-select: text;">
+                                192.168.1.5:8080
+                            </div>
+                        </div>
+
+                        <!-- Receive View (Camera Scanner UI - Currently hidden in mockup but visually implied) -->
+                        <!-- 
+                        <div style="display: flex; flex-direction: column; flex: 1; align-items: center; justify-content: center;">
+                            <div style="width: 280px; height: 280px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 24px; position: relative;">
+                                <div style="position: absolute; top: -2px; left: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 24px 0 0 0;"></div>
+                                <div style="position: absolute; top: -2px; right: -2px; width: 40px; height: 40px; border-top: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 24px 0 0;"></div>
+                                <div style="position: absolute; bottom: -2px; left: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-left: 4px solid var(--brand-primary); border-radius: 0 0 0 24px;"></div>
+                                <div style="position: absolute; bottom: -2px; right: -2px; width: 40px; height: 40px; border-bottom: 4px solid var(--brand-primary); border-right: 4px solid var(--brand-primary); border-radius: 0 0 24px 0;"></div>
+                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(239, 68, 68, 0.5); box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);"></div>
+                            </div>
+                            <div style="margin-top: 24px; font-size: 15px; color: var(--text-secondary);">Point camera at QR code on sharing device</div>
+                        </div>
+                        -->
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Journey Step 25 -->
+            <!-- 25. BackupRestoreScreen (PRD §10.1, §3.1 - More → Backup & Restore) -->
+            <div class="screen-container">
+                <div class="screen-title">25 / Backup & Restore</div>
+                <div class="screen">
+                    <div class="top-bar">
+                        <button class="top-bar-btn"><i class="ph-bold ph-arrow-left"></i></button>
+                        <div class="top-bar-title" style="font-size: 18px;">Backup & Restore</div>
+                        <button class="top-bar-btn"></button>
+                    </div>
+                    
+                    <div style="padding: 24px; display: flex; flex-direction: column; flex: 1; gap: 24px; overflow-y: auto;">
+
+                        <!-- Last Backup Info Card -->
+                        <div style="background: var(--bg-surface-raised); border-radius: 20px; padding: 24px; border: 1px solid var(--border-subtle); text-align: center;">
+                            <div style="width: 56px; height: 56px; border-radius: 20px; background: var(--color-received-bg); color: var(--color-received); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto;">
+                                <i class="ph-fill ph-shield-check"></i>
+                            </div>
+                            <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Last Backup</div>
+                            <div style="font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">22 Feb 2026, 09:30 PM</div>
+                            <div style="font-size: 13px; color: var(--text-secondary);">2 days ago · 12,450 entries · 1.2 MB</div>
+                        </div>
+                        
+                        <!-- Save Backup Section -->
+                        <div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Create Backup</div>
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--brand-primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;"><i class="ph-bold ph-cloud-arrow-up"></i></div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Save to Downloads</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Creates a .slbackup file you can share via WhatsApp or Google Drive</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-full bg-action" style="height: 52px; border-radius: 14px; font-size: 15px;"><i class="ph-bold ph-download-simple"></i> Save Backup Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Encryption Toggle -->
+                        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <i class="ph-bold ph-lock-simple" style="font-size: 22px; color: var(--color-credit);"></i>
+                                <div>
+                                    <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Encrypt Backup</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">Protect with a passphrase</div>
+                                </div>
+                            </div>
+                            <div style="width: 52px; height: 32px; border-radius: 100px; background: var(--border-strong); position: relative; cursor: pointer;">
+                                <div style="width: 26px; height: 26px; border-radius: 50%; background: white; position: absolute; top: 3px; left: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Restore Section -->
+                        <div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Restore Data</div>
+                            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--color-credit-bg); color: var(--color-credit); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;"><i class="ph-bold ph-cloud-arrow-down"></i></div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Restore from Backup</div>
+                                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Replace all current data with a .slbackup file</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-full bg-surface" style="height: 52px; border-radius: 14px; font-size: 15px; border-color: var(--border-strong);"><i class="ph-bold ph-folder-open"></i> Choose Backup File</button>
+                            </div>
+                        </div>
+
+                        <!-- Warning Notice -->
+                        <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: 16px; padding: 16px; display: flex; gap: 12px; align-items: flex-start;">
+                            <i class="ph-fill ph-warning-circle" style="color: var(--color-given); font-size: 20px; flex-shrink: 0; margin-top: 2px;"></i>
+                            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">Restoring a backup will <strong style="color: var(--color-given);">replace all current data</strong>. Make sure you've backed up first. This action cannot be undone.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
